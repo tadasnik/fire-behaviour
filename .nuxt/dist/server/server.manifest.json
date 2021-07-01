@@ -1,0 +1,33 @@
+{
+  "entry": "server.js",
+  "files": {
+    "components/bar-plot.js": "components/bar-plot.js",
+    "components/box-plot.js": "components/box-plot.js",
+    "components/card.js": "components/card.js",
+    "components/echarboxplot.js": "components/echarboxplot.js",
+    "components/echars.js": "components/echars.js",
+    "components/fuel-control.js": "components/fuel-control.js",
+    "components/fuel-props.js": "components/fuel-props.js",
+    "components/input-props.js": "components/input-props.js",
+    "components/logo.js": "components/logo.js",
+    "components/select-option.js": "components/select-option.js",
+    "components/slider.js": "components/slider.js",
+    "pages/index.js": "pages/index.js",
+    "server.js": "server.js"
+  },
+  "maps": {
+    "components/bar-plot.js": "components/bar-plot.js.map",
+    "components/box-plot.js": "components/box-plot.js.map",
+    "components/card.js": "components/card.js.map",
+    "components/echarboxplot.js": "components/echarboxplot.js.map",
+    "components/echars.js": "components/echars.js.map",
+    "components/fuel-control.js": "components/fuel-control.js.map",
+    "components/fuel-props.js": "components/fuel-props.js.map",
+    "components/input-props.js": "components/input-props.js.map",
+    "components/logo.js": "components/logo.js.map",
+    "components/select-option.js": "components/select-option.js.map",
+    "components/slider.js": "components/slider.js.map",
+    "pages/index.js": "pages/index.js.map",
+    "server.js": "server.js.map"
+  }
+}
