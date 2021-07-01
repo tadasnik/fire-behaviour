@@ -1,3 +1,3 @@
 # behave
-# BehavePlus fire behaviour model vue interface
+BehavePlus fire behaviour model vue interface
 
