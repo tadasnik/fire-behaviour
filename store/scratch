@@ -1,0 +1,31 @@
+        <div class="tile is-child box">
+          <box-plot
+            :dataset="dataset['surface.weighted.fire.spreadRate']"
+            :title="titleFireSpread"
+          />
+        </div>
+
+    runModel (fuel) {
+      this.setFuelInputs(fuel)
+      this.setSiteInputs()
+      this.dag.run()
+      this.updateResults(fuel)
+    },
+
+    updateResults (fuel) {
+      console.log('res', fuel)
+      this.selectNodes.forEach((item) => {
+        console.log('res node', item)
+        const node = this.dag.get(item)
+        const res = this.resultsObj.get(item)
+        const dispRes = []
+        res.forEach((item) => {
+          dispRes.push(node._variant.nativeValueToDisplayValue(item))
+        })
+        console.log('res res', dispRes)
+        this.results[item] = dispRes
+        // this.dataset[item][fuel] = this.getSeries(dispRes)
+      })
+    },
+
+
