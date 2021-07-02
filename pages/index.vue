@@ -17,8 +17,8 @@
         <div class="tile is-child box">
           <div class="level-left mb-4" style="width: 100%">
             <div class="level-item">
-              <p class="subtitle is-3">
-                <strong>Select fuel model</strong>
+              <p class="is-size-4">
+                <strong>Fuel models</strong>
               </p>
             </div>
             <div class="level-item">

@@ -1,8 +1,8 @@
 <template>
   <div class="block">
-    <b-field :label="title" style="width: 100%;">
+    <b-field :label="title" custom-class="is-small" horizontal style="width: 100%">
       <div class="level">
-        <div class="level-left" style="width: 80%">
+        <div class="level-left" style="width: 75%">
           <b-slider
             :value="value"
             :max="max"
@@ -12,12 +12,14 @@
             @change="passValue($event)"
           />
         </div>
-        <div class="level-right" style="width: 20%">
+        <div class="level-right" style="width: 15%">
           <b-switch
             v-model="isDisabled"
             @input="passEvent($event)"
           />
-          Range
+          <p class="is-size-7">
+            Range
+          </p>
         </div>
       </div>
     </b-field>
