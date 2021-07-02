@@ -3,10 +3,8 @@
     <div class="tile is-ancestor">
       <div class="tile is-6 is-vertical is-parent">
         <div class="tile is-child box">
-          <p
-            class="title"
-          >
-            Site inputs
+          <p class="is-size-4">
+            <strong>Site inputs</strong>
           </p>
           <input-props
             key="uidinputs"
