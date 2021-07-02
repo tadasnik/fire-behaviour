@@ -73,7 +73,7 @@ export const nodeProps = {
     },
     {
       geneLabel: 'surface.primary.fuel.model.behave.parms.dead.heatOfCombustion',
-      label: 'Dead fuel heat (J/g)',
+      label: 'Dead fuel heat (J/kg)',
       catalogParam: 'deadHeat',
       units: 'J/kg',
       used: true,
