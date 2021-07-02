@@ -42,8 +42,6 @@
             :dataset="dataset['surface.weighted.fire.flameLength']"
             :title="titleFlameHeight"
           />
-        </div>
-        <div class="tile is-child box">
           <box-plot
             :dataset="dataset['surface.weighted.fire.spreadRate']"
             :title="titleFireSpread"
