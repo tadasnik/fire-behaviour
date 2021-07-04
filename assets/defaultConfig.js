@@ -37,7 +37,7 @@ export const defaultConfig = {
   },
   defaultWindSpeed: {
     key: 'site.wind.speed.at10m',
-    value: [5] // m/s
+    value: [2, 2.5] // m/s
   },
   defaultSlopeSteepness: {
     key: 'site.slope.steepness.degrees',

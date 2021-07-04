@@ -42,7 +42,7 @@ export default {
           decimalsInFloat: 2
         },
         tooltip: {
-          enebled: false,
+          enebled: true,
           x: {
             show: true
           },
@@ -59,19 +59,12 @@ export default {
               lower: '#A5978B'
             }
           }
-
         }
       }
     }
   },
   created () {
     this.chartOptions.title = this.title
-  },
-
-  methods: {
-    getChartOptions () {
-      return this.chartOptions
-    }
   }
 }
 </script>

@@ -122,6 +122,7 @@ export default {
     removeFuel (payload) {
       console.log('removing fuel', payload)
       this.$store.dispatch('selector/removeSelectedFuel', payload)
+      this.$emit('deleteFuel')
     },
 
     setValue (param, payload) {

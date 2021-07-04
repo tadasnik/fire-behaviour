@@ -79,7 +79,10 @@ export default {
     return {
       sim: {},
       dag: {},
-      results: {},
+      results: {
+        'surface.weighted.fire.flameLength': {},
+        'surface.weighted.fire.spreadRate': {}
+      },
       nodeProps: {},
       activeTab: 0,
       availFuelModels: [],
@@ -87,8 +90,8 @@ export default {
       fuelModelsDisabled: true,
       resultsObj: {},
       dataset: {
-        'surface.weighted.fire.flameLength': {},
-        'surface.weighted.fire.spreadRate': {}
+        'surface.weighted.fire.flameLength': [],
+        'surface.weighted.fire.spreadRate': []
       },
       titleFlameHeight: {
         text: 'Flame length (m)'
@@ -160,12 +163,15 @@ export default {
     this.dag.select(this.selectNodes)
     this.dag.configure(this.defaultDagConfig)
     this.resultsObj = new StorageNodeMap(this.dag)
-    this.populateResults()
     this.dag.setStorageClass(this.resultsObj)
-    this.runModels()
   },
 
   mounted () {
+    this.runModels()
+  },
+
+  beforeUpdate () {
+    window.dispatchEvent(new Event('resize'))
   },
 
   methods: {
@@ -209,6 +215,15 @@ export default {
         res.push({ x: key, y: val })
       }
       return [{ data: res }]
+    },
+
+    removeFuelFromResults (fuel) {
+      console.log('removing ', fuel)
+      this.selectNodes.forEach((item) => {
+        console.log('remove', this.results[item])
+        delete this.results[item][fuel]
+        console.log(this.results[item])
+      })
     },
 
     runModel (fuel) {
@@ -342,12 +357,6 @@ export default {
     addFuelToSelected (selected) {
       const fuelCode = this.getFuelCode(selected)
       this.$store.dispatch('selector/addSelectedFuel', fuelCode)
-      this.runModels()
-    },
-
-    removeFuelFromSelected (selected) {
-      const fuelCode = this.getFuelCode(selected)
-      this.$store.dispatch('selector/removeSelectedFuel', fuelCode)
       this.runModels()
     },
 

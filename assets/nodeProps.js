@@ -19,7 +19,7 @@ export const nodeProps = {
       label: 'Wind speed (m/s)',
       units: 'm/s',
       used: true,
-      value: 1.05,
+      value: [1, 1.5],
       max: 30,
       step: 1
     },
