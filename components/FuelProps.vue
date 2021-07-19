@@ -4,11 +4,12 @@
       <template #trigger="props">
         <div
           class="card-header"
+          padding="0.5"
           role="button"
           aria-controls="contentIdForA11y3"
         >
-          <p class="card-header-title">
-            {{ getFuelModelLabel }}, "{{ fuelModelCode }}"
+          <p class="card-header-title is-size-6" is-size-1>
+            {{ fuelModelCode }}: {{ getFuelModelLabel }}
           </p>
           <a class="card-header-icon">
             <b-icon :icon="props.open ? 'menu-down' : 'menu-up'" />
@@ -16,15 +17,6 @@
         </div>
       </template>
       <div class="card-content">
-        <div class="content">
-          <b-button
-            type="is-danger"
-            icon-left="delete"
-            @click="removeFuel(fuelModelCode)"
-          >
-            Remove
-          </b-button>
-        </div>
         <div class="block">
           <fuel-control
             v-for="{ label, catalogParam, max, step } in getFuelNodes"
@@ -62,7 +54,7 @@ export default {
     },
 
     nodeProps: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
@@ -76,15 +68,22 @@ export default {
   computed: {
 
     ...mapGetters({
-      fuelMod: 'selector/fuelMod'
+      fuelModels: 'selector/fuelModels'
     }),
 
     getFuelModelLabel () {
-      return this.fuelMod(this.fuelModelCode).label
+      return this.fuelModels[this.fuelModelCode].label
     },
 
     getFuelNodes () {
-      return this.nodeProps.filter(item => item.used === true)
+      const fuelNodes = []
+      Object.values(this.nodeProps).forEach((item) => {
+        if (item.selected === true) {
+          fuelNodes.push(item)
+        }
+      })
+      return fuelNodes
+      // return this.nodeProps.filter(item => item.selected === true)
     }
   },
 
@@ -100,11 +99,11 @@ export default {
     },
 
     getValue (param) {
-      return this.fuelMod(this.fuelModelCode)[param]
+      return this.fuelModels[this.fuelModelCode][param]
     },
 
     getValueConvert (param) {
-      const val = this.fuelMod(this.fuelModelCode)[param]
+      const val = this.fuelModels[this.fuelModelCode][param]
       if (param === 'deadHeat' || param === 'liveHeat') {
         if (Array.isArray(val)) {
           const valCopy = [...val]
@@ -113,20 +112,13 @@ export default {
           })
           return valCopy
         } else {
-          console.log('gete')
           return Math.round(val / 1000)
         }
       }
     },
 
-    removeFuel (payload) {
-      console.log('removing fuel', payload)
-      this.$store.dispatch('selector/removeSelectedFuel', payload)
-      this.$emit('deleteFuel')
-    },
-
     setValue (param, payload) {
-      this.$store.dispatch('selector/updateFuelProp', { fuel: this.fuelModelCode, prop: param, value: payload })
+      this.$store.dispatch('selector/updateFuelProp', { fuel: this.fuelModelCode, param, payload })
       this.$emit('change')
     },
 
@@ -147,13 +139,10 @@ export default {
     },
 
     triggerArray (param, payload) {
-      console.log('trigger', param, payload)
       if (payload === true) {
         const orig = this.getValue(param)
         let val = []
-        console.log('trigger before', orig)
         val = [orig, orig * 1.1]
-        console.log('trigger after', val)
         this.setValue(param, val)
       } else {
         const val = [...this.getValue(param)]
@@ -163,3 +152,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.card-header:hover {
+ background-color: $grey-light;
+}
+</style>

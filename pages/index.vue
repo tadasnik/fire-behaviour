@@ -3,48 +3,75 @@
     <div class="tile is-ancestor">
       <div class="tile is-6 is-vertical is-parent">
         <div class="tile is-child box">
-          <p class="is-size-4">
-            <strong>Site inputs</strong>
-          </p>
+          <section class="pb-4">
+            <h4 class="title is-4">
+              BahavePlus inputs
+            </h4>
+          </section>
           <input-props
             key="uidinputs"
-            :node-props="nodeProps.inputNodeProps"
+            :selected-inputs="selectedInputs"
+            :node-props="nodeProps.inputNodes"
             @change="runModels()"
           />
-        </div>
-        <div class="tile is-child box">
-          <div class="level-left mb-4" style="width: 100%">
-            <div class="level-item">
-              <p class="is-size-4">
-                <strong>Fuel models</strong>
-              </p>
-            </div>
-            <div class="level-item">
-              <select-option
-                :options="availFuelModelStrings"
-                :selected="selectedPrimaryFuelString"
-                @updateOption="addFuelToSelected($event)"
-              />
-            </div>
-          </div>
+          <section class="p-4">
+            <nav class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h4 class="title is-4">
+                    Selected fuels
+                  </h4>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <multiselect
+                    :label="'Add/remove fuel models'"
+                    :options="fuelStrings"
+                    :selected-options="selectedFuels"
+                    @updateSelection="updateSelectedFuel"
+                  />
+                </div>
+              </div>
+            </nav>
+          </section>
           <fuel-props
-            v-for="(item, index) in selectedFuels"
-            :key="item + index"
-            :fuel-model-code="item"
+            v-for="(fuel, index) in selectedFuels"
+            :key="fuel + index"
+            :fuel-model-code="fuel"
             :node-props="nodeProps.fuelNodeProps"
-            @change="runModel(item)"
+            @change="fuelModelRun(fuel)"
           />
         </div>
       </div>
       <div class="tile is-6 is-vertical is-parent">
         <div class="tile is-child box">
-          <box-plot
-            :dataset="dataset['surface.weighted.fire.flameLength']"
-            :title="titleFlameHeight"
-          />
-          <box-plot
-            :dataset="dataset['surface.weighted.fire.spreadRate']"
-            :title="titleFireSpread"
+          <section class="p-4">
+            <nav class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <h4 class="title is-4">
+                    Model outputs
+                  </h4>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <multiselect
+                    :label="'Select model outputs'"
+                    :options="outputStrings"
+                    :selected-options="selectedOutputs"
+                    @updateSelection="updateSelectedOutput"
+                  />
+                </div>
+              </div>
+            </nav>
+          </section>
+          <box-apex
+            v-for="(data, index) in dataset"
+            :key="index"
+            :dataset="data.dataset"
+            :title="getBoxplotLabel(data.label)"
           />
         </div>
       </div>
@@ -55,15 +82,13 @@
 <script>
 
 import { nodeProps } from '@/assets/nodeProps.js'
+import { defaultConfig } from '@/assets/defaultConfig.js'
 import { Sim, FuelCatalog, StorageNodeMap } from '@cbevins/fire-behavior-simulator'
 import { min, max, median, quantile } from 'd3-array'
 import { mapGetters } from 'vuex'
 import FuelProps from '~/components/FuelProps'
 import InputProps from '~/components/InputProps'
-import SelectOption from '~/components/SelectOption'
-// import BarPlot from '~/components/BarPlot'
-// import Echars from '~/components/Echars'
-import BoxPlot from '~/components/BoxPlot'
+import Multiselect from '~/components/Multiselect'
 
 export default {
   name: 'BahavePlus',
@@ -71,62 +96,81 @@ export default {
   components: {
     FuelProps,
     InputProps,
-    SelectOption,
-    BoxPlot
+    Multiselect
   },
 
   data () {
     return {
       sim: {},
       dag: {},
-      results: {
-        'surface.weighted.fire.flameLength': {},
-        'surface.weighted.fire.spreadRate': {}
-      },
       nodeProps: {},
-      activeTab: 0,
-      availFuelModels: [],
-      numbers: [2, 4],
-      fuelModelsDisabled: true,
-      resultsObj: {},
-      dataset: {
-        'surface.weighted.fire.flameLength': [],
-        'surface.weighted.fire.spreadRate': []
-      },
-      titleFlameHeight: {
-        text: 'Flame length (m)'
-      },
-      titleFireSpread: {
-        text: 'Fire spread rate (m/min)'
-      }
+      selectedFuels: [],
+      selectedOutputs: [],
+      selectedInputs: [],
+      testdata: { bb: [1, 2, 3, 4, 5], cc: 2, dd: 5, ee: 3 }
     }
   },
 
   computed: {
     ...mapGetters({
       fuelModels: 'selector/fuelModels',
-      fuelMod: 'selector/fuelMod',
       siteInputs: 'selector/siteInputs',
-      siteInput: 'selector/siteInput',
-      selectNodes: 'selector/selectNodes',
+      outputNodes: 'selector/outputNodes',
       defaultDagConfig: 'selector/defaultDagConfig',
       fuelDomain: 'selector/fuelDomain',
-      selectedFuels: 'selector/selectedFuels'
+      results: 'selector/results'
+
     }),
 
-    getFlameLength () {
-      return this.dataset['surface.weighted.fire.flameLength']
-    },
-    getFuelNodes () {
-      return this.nodeProps.fuelNodeProps.filter(item => item.used === true)
+    datasetbox () {
+      const topArray = []
+      this.selectedOutputs.forEach((node) => {
+        const fuelArray = []
+        this.selectedFuels.forEach((fuel) => {
+          const fuelOb = []
+          fuelOb.push(fuel)
+          fuelOb.push(this.results[node][fuel])
+          fuelArray.push(fuelOb)
+        })
+        topArray.push({
+          label: node,
+          dataset: fuelArray
+        })
+      })
+      return topArray
     },
 
-    getInputNodes () {
-      return this.nodeProps.inputNodeProps.filter(item => item.used === true)
+    dataset () {
+      const resArray = []
+      this.selectedOutputs.forEach((node) => {
+        const res = []
+        this.selectedFuels.forEach((fuel) => {
+          res.push({ x: fuel, y: this.results[node][fuel] })
+        })
+        resArray.push({
+          label: node,
+          dataset: [{ data: res }]
+        })
+      })
+      return resArray
     },
 
-    getSelectedNodes () {
-      return this.dag.selectedNodes()
+    fuelStrings () {
+      const optionsText = []
+      Object.keys(this.fuelModels).forEach((key) => {
+        optionsText.push([key, this.fuelModels[key].code +
+                         ': ' +
+                         this.fuelModels[key].label])
+      })
+      return optionsText
+    },
+
+    outputStrings () {
+      const optionsText = []
+      Object.keys(this.outputNodes).forEach((key) => {
+        optionsText.push([key, this.outputNodes[key].text])
+      })
+      return optionsText
     },
 
     availFuelModelStrings () {
@@ -137,33 +181,32 @@ export default {
       return modelStrings
     },
 
-    selectedPrimaryFuelString () {
-      return (this.fuelModels.filter(element => element.code === this.selectedFuels[0]))[0].label
-    },
-
-    getResults () {
-      const resul = []
-      const selNodes = this.getSelectedNodes
-      selNodes.forEach((node) => {
-        resul.push([node.label().split(' ').slice(-2), node.displayValue()])
+    selectedNodes () {
+      const outputNodeList = []
+      this.selectedOutputs.forEach((item) => {
+        outputNodeList.push(this.outputNodes[item].geneLabel)
       })
-      return resul
+      return outputNodeList
     }
   },
 
   created () {
     this.nodeProps = nodeProps
     // this.fuelCatalog = FuelCatalog
-    this.$store.dispatch('selector/initConfig')
-    this.$store.dispatch('selector/initSiteInputs', this.nodeProps.inputNodeProps)
+    this.$store.dispatch('selector/initOutputNodes', this.nodeProps.outputNodes)
+    this.$store.dispatch('selector/initSiteInputs', this.nodeProps.inputNodes)
+    this.selectedOutputs = defaultConfig.defaultOutputs
+    this.selectedFuels = defaultConfig.defaultFuels
     this.sim = new Sim()
     this.dag = this.sim.createDag('basicUsage')
+    this.dag.configure(this.defaultDagConfig)
     this.setNodeUnits(this.nodeProps)
     this.prepareFuels()
-    this.dag.select(this.selectNodes)
-    this.dag.configure(this.defaultDagConfig)
+    this.$store.dispatch('selector/initConfig')
     this.resultsObj = new StorageNodeMap(this.dag)
     this.dag.setStorageClass(this.resultsObj)
+    this.updateDagSelected()
+    this.updateRequiredSiteInputs()
   },
 
   mounted () {
@@ -175,12 +218,9 @@ export default {
   },
 
   methods: {
-
-    populateResults () {
-      this.selectNodes.forEach((item) => {
-        this.results[item] = {}
-        this.dataset[item] = {}
-      })
+    getBoxplotLabel (node) {
+      return this.outputNodes[node].text + ' (' +
+        this.outputNodes[node].units + ')'
     },
 
     getStats (values) {
@@ -209,40 +249,43 @@ export default {
       return [{ data: res }]
     },
 
-    getSeriesN (results) {
-      const res = []
-      for (const [key, val] of Object.entries(results)) {
-        res.push({ x: key, y: val })
-      }
-      return [{ data: res }]
-    },
-
-    removeFuelFromResults (fuel) {
-      console.log('removing ', fuel)
-      this.selectNodes.forEach((item) => {
-        console.log('remove', this.results[item])
-        delete this.results[item][fuel]
-        console.log(this.results[item])
-      })
-    },
-
     runModel (fuel) {
       this.setFuelInputs(fuel)
       this.setSiteInputs()
       this.dag.run()
-      this.selectNodes.forEach((item) => {
-        console.log('run', item)
-        const node = this.dag.get(item)
-        const res = this.resultsObj.get(item)
+      this.selectedOutputs.forEach((item) => {
+        const geneLabel = this.outputNodes[item].geneLabel
+        const node = this.dag.get(geneLabel)
+        const res = this.resultsObj.get(geneLabel)
         const dispRes = []
         res.forEach((item) => {
-          dispRes.push(node._variant.nativeValueToDisplayValue(item))
+          dispRes.push(node._variant.displayValue(item))
         })
-        console.log('run re ', dispRes)
-        this.results[item][fuel] = this.getStats(dispRes)
-        console.log('run results ', this.results[item])
-        console.log('run dataset ', this.getSeriesN(this.results[item]))
-        this.dataset[item] = this.getSeriesN(this.results[item])
+        this.$store.dispatch('selector/updateResults', { output: item, fuel, payload: this.getStats(dispRes.map(Number)) })
+      })
+    },
+
+    fuelModelRun (fuel) {
+      this.runModel(fuel)
+    },
+
+    updateDagSelected () {
+      this.dag.clearSelected()
+      this.dag.select(this.selectedNodes)
+    },
+
+    updateRequiredSiteInputs () {
+      this.selectedInputs = []
+      const reqNodes = []
+      this.dag.requiredInputNodes().forEach((node) => {
+        if (node.key().split('.')[0] === 'site') {
+          reqNodes.push(node.key())
+        }
+      })
+      Object.keys(this.siteInputs).forEach((key) => {
+        if (reqNodes.includes(this.siteInputs[key].geneLabel)) {
+          this.selectedInputs.push(key)
+        }
       })
     },
 
@@ -250,40 +293,34 @@ export default {
       this.selectedFuels.forEach((item) => {
         this.runModel(item)
       })
-      // this.dataset = this.getSeries()
-    },
-
-    fuelPropChange (fuel, prop, payload) {
-
-    },
-
-    formatResults (fuel) {
-      const res = {
-        x: fuel,
-        y: []
-      }
-      return res
     },
 
     setNodeUnits (nodePropObject) {
-      for (const key in nodePropObject) {
-        nodePropObject[key].forEach((item) => {
-          this.dag.get(item.geneLabel)._variant.setDisplayUnits(item.units)
+      Object.values(nodePropObject).forEach((group) => {
+        Object.values(group).forEach((item) => {
+          const node = this.dag.get(item.geneLabel)
+          node._variant.setDisplayUnits(item.units)
+          node._variant.setDisplayDecimals(item.decimals)
         })
-      }
+      })
     },
 
     prepareFuels () {
-      const Ms = FuelCatalog.models().filter(item => item.domain === 'behave').slice()
-      const fuelMs = JSON.parse(JSON.stringify(Ms))
-      this.nodeProps.fuelNodeProps.forEach((fuelProp) => {
-        if (fuelProp.used === true) {
+      const Ms = FuelCatalog.models().filter(item => item.domain === 'behave')
+      const fuelMs = {}
+      Ms.forEach((item) => {
+        const label = item.code
+        fuelMs[label] = JSON.parse(JSON.stringify(item))
+        fuelMs[label].selected = false
+        Object.values(this.nodeProps.fuelNodeProps).forEach((fuelProp) => {
           const node = this.dag.get(fuelProp.geneLabel)
-          fuelMs.forEach((item) => {
-            const val = node._variant.displayValue(item[fuelProp.catalogParam])
-            item[fuelProp.catalogParam] = parseFloat(val)
-          })
-        }
+          const val = node._variant.displayValue(item[fuelProp.catalogParam])
+          fuelMs[label][fuelProp.catalogParam] = parseFloat(val)
+        })
+      })
+      const defFuels = defaultConfig.defaultFuels
+      defFuels.forEach((item) => {
+        fuelMs[item].selected = true
       })
       this.$store.dispatch('selector/initFuelModels', fuelMs)
     },
@@ -305,14 +342,14 @@ export default {
 
     arrayToNative (node, values) {
       const valuesNative = []
-      values.forEach((element, index) => {
+      values.forEach((element) => {
         valuesNative.push(node._variant.displayValueToNativeValue(element))
       })
       return valuesNative
     },
 
     setSiteInputs () {
-      this.siteInputs.forEach((input) => {
+      Object.values(this.siteInputs).forEach((input) => {
         const node = this.dag.get(input.geneLabel)
         const val = input.value
         if (Array.isArray(val)) {
@@ -327,11 +364,11 @@ export default {
 
     setFuelInputs (fuel) {
       this.dag.input([['surface.primary.fuel.model.catalogKey', fuel]])
-      this.nodeProps.fuelNodeProps.forEach((fuelProp) => {
-        if (fuelProp.used) {
+      Object.values(this.nodeProps.fuelNodeProps).forEach((fuelProp) => {
+        if (fuelProp.selected) {
           const node = this.dag.get(fuelProp.geneLabel)
           node._is._input = true
-          const val = this.fuelMod(fuel)[fuelProp.catalogParam]
+          const val = this.fuelModels[fuel][fuelProp.catalogParam]
           if (Array.isArray(val)) {
             const values = this.makeRange(val, 9)
             const valuesNative = this.arrayToNative(node, values)
@@ -343,30 +380,34 @@ export default {
       })
     },
 
-    getPrimaryFuel (label) {
-      return this.fuelCatalog.models().filter(element =>
-        element.label === label
-      )[0]
+    modelSetup () {
+      this.updateDagSelected()
+      this.updateRequiredSiteInputs()
     },
 
-    getFuelCode (payload) {
-      const fuel = this.fuelModels.filter(element => element.label === payload)[0].code
-      return fuel
-    },
-
-    addFuelToSelected (selected) {
-      const fuelCode = this.getFuelCode(selected)
-      this.$store.dispatch('selector/addSelectedFuel', fuelCode)
+    updateSelectedOutput (label, payload) {
+      if (payload !== true) {
+        const index = this.selectedOutputs.indexOf(label)
+        if (index > -1) {
+          this.selectedOutputs.splice(index, 1)
+        }
+      } else {
+        this.selectedOutputs.push(label)
+      }
+      this.modelSetup()
       this.runModels()
     },
 
-    getStoreValue (label) {
-      return parseFloat(this[label])
-    },
-
-    updateSiteInput (geneLabel, payload) {
-      this.$store.dispatch('selector/updateSiteInputsProp', { geneLabel, payload })
-      this.runModels()
+    updateSelectedFuel (label, payload) {
+      if (payload !== true) {
+        const index = this.selectedFuels.indexOf(label)
+        if (index > -1) {
+          this.selectedFuels.splice(index, 1)
+        }
+      } else {
+        this.selectedFuels.push(label)
+        this.runModel(label)
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-const pkg = require("./package");
+const pkg = require('./package')
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -22,11 +22,15 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/css/main-style.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vue-apexchart.client.js'}
+    {
+      src: '~/plugins/vue-apexchart.client.js',
+      mode: 'client'
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -35,13 +39,20 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/style-resources'
   ],
 
+  styleResources: {
+    scss: [
+      '~/assets/css/utilities.scss',
+      '~/assets/vars/colors.scss'
+    ]
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/buefy
-    'nuxt-buefy'
+    ['nuxt-buefy', { css: false }]
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

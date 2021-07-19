@@ -1,6 +1,7 @@
 export const defaultConfig = {
   defaultNodes: ['surface.weighted.fire.spreadRate',
     'surface.weighted.fire.flameLength'],
+  defaultOutputs: ['fireSpreadRate', 'fireFlameLength'],
   defaultDagConfig: [
     // The primary fuel is specified by a fuel model catalog key
     ['configure.fuel.primary', ['catalog', 'behave', 'chaparral', 'palmettoGallberry', 'westernAspen'][0]],
@@ -26,7 +27,7 @@ export const defaultConfig = {
 
   defaultFuelDomain: 'behave',
 
-  defaultPrimaryFuel: ['sh6', 'sh8', 'gs3', 'gr6', 'gr8'],
+  defaultFuels: ['sh6', 'sh8', 'gs3', 'gr6', 'gr8'],
   defaultDeadMoisture: {
     key: 'site.moisture.dead.category',
     value: [0.05]

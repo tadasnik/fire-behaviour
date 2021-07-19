@@ -8,7 +8,7 @@
           aria-controls="contentIdForA21y3"
         >
           <p class="card-header-title">
-            Site inputs
+            Required weather/site inputs
           </p>
           <a class="card-header-icon">
             <b-icon :icon="props.open ? 'menu-down' : 'menu-up'" />
@@ -18,16 +18,16 @@
       <div class="card-content">
         <div class="block">
           <fuel-control
-            v-for="{ label, geneLabel, max, step } in getInputNodes"
+            v-for="{ label, code, max, step } in getInputNodes"
             :key="label"
             :title="label"
-            :value="getValue(geneLabel)"
+            :value="getValue(code)"
             :max="max"
             :step="step"
             indicator
             lazy
-            @change="updateSiteInput(geneLabel, $event)"
-            @input="triggerArray(geneLabel, $event)"
+            @change="updateSiteInput(code, $event)"
+            @input="triggerArray(code, $event)"
           />
         </div>
       </div>
@@ -47,8 +47,12 @@ export default {
   },
 
   props: {
-    nodeProps: {
+    selectedInputs: {
       type: Array,
+      required: true
+    },
+    nodeProps: {
+      type: Object,
       required: true
     }
   },
@@ -61,33 +65,36 @@ export default {
   computed: {
 
     ...mapGetters({
-      siteInput: 'selector/siteInput'
+      siteInputs: 'selector/siteInputs'
     }),
 
     getInputNodes () {
-      return this.nodeProps.filter(item => item.used === true)
+      const inputNodes = []
+      this.selectedInputs.forEach((item) => {
+        inputNodes.push(this.siteInputs[item])
+      })
+      return inputNodes
+      // return this.nodeProps.filter(item => item.selected === true)
     }
   },
 
   methods: {
 
     getValue (param) {
-      return this.siteInput(param)
+      return this.siteInputs[param].value
     },
 
-    updateSiteInput (geneLabel, payload) {
-      this.$store.dispatch('selector/updateSiteInputsProp', { geneLabel, payload })
+    updateSiteInput (input, payload) {
+      const prop = 'value'
+      this.$store.dispatch('selector/updateSiteInputProp', { input, prop, payload })
       this.$emit('change')
     },
 
     triggerArray (param, payload) {
-      console.log('trigger', param, payload)
       if (payload === true) {
         const orig = this.getValue(param)
         let val = []
-        console.log('trigger before', val)
         val = [orig, orig * 1.1]
-        console.log('trigger after', val)
         this.updateSiteInput(param, val)
       } else {
         const val = [...this.getValue(param)]
@@ -97,3 +104,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.card-header {
+ background-color: $warning;
+}
+</style>

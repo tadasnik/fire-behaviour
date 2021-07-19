@@ -2,7 +2,7 @@
   <div class="block">
     <b-field :label="title" custom-class="is-small" horizontal style="width: 100%">
       <div class="level">
-        <div class="level-left" style="width: 75%">
+        <div class="level-left" style="width: 70%">
           <b-slider
             :value="value"
             :max="max"
@@ -13,13 +13,16 @@
           />
         </div>
         <div class="level-right" style="width: 15%">
-          <b-switch
-            v-model="isDisabled"
-            @input="passEvent($event)"
-          />
-          <p class="is-size-7">
-            Range
-          </p>
+          <div class="level-item">
+            <b-switch
+              v-model="isDisabled"
+              size="is-small"
+              @input="passEvent($event)"
+            />
+            <p class="is-size-7">
+              Range
+            </p>
+          </div>
         </div>
       </div>
     </b-field>
@@ -72,7 +75,6 @@ export default {
     },
 
     passEvent (payload) {
-      console.log('switch', this.isDisabled)
       this.$emit('input', this.isDisabled)
     }
 
