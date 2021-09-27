@@ -17,15 +17,13 @@
     "core-js": "^3.9.1",
     "d3": "^7.0.0",
     "d3-scale": "^4.0.0",
-    "echarts": "^5.1.2",
     "file-system": "^2.2.2",
     "fs": "^0.0.1-security",
     "nuxt": "^2.15.3",
     "nuxt-babel": "^1.0.1",
     "nuxt-buefy": "^0.4.4",
     "v-click-outside": "^3.1.2",
-    "vue-apexcharts": "^1.6.1",
-    "vue-echarts": "^6.0.0-rc.6"
+    "vue-apexcharts": "^1.6.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.0",
@@ -36,7 +34,7 @@
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.10.0",
     "node-sass": "^6.0.1",
-    "sass": "^1.35.2",
+    "sass": "~1.32.12",
     "sass-loader": "10"
   }
 }
