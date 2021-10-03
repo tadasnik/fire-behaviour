@@ -49,6 +49,22 @@ export default {
             }
           }
         },
+        annotations: {
+          yaxis: [
+            {
+              y: 1,
+              y2: 2,
+              offsetX: -50,
+              width: '200%',
+              yAxisIndex: 0,
+              borderColor: '#000',
+              fillColor: '#FEB019',
+              label: {
+                text: 'Y-axis range'
+              }
+            }
+          ]
+        },
         plotOptions: {
           boxPlot: {
             colors: {

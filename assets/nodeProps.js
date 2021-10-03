@@ -54,19 +54,37 @@ export const nodeProps = {
       label: 'Length/Width Ratio',
       units: 'ratio',
       decimals: 2
+    },
+    crownFireSpreadRate: {
+      group: 'crown',
+      selected: true,
+      geneLabel: 'crown.fire.active.spreadRate',
+      text: 'Crown fire spread rate',
+      label: 'fireSpreadRate',
+      units: 'm/min',
+      decimals: 2
+    },
+    crownFireFlameLength: {
+      group: 'primary',
+      selected: true,
+      geneLabel: 'crown.fire.active.flameLength',
+      text: 'Crown fire flame length',
+      label: 'fireFlameLength',
+      units: 'm',
+      decimals: 2
     }
   },
 
   inputNodes: {
     windSpeed: {
       geneLabel: 'site.wind.speed.at10m',
-      label: 'Wind speed (m/s)',
+      label: 'Wind speed (km/h)',
       code: 'windSpeed',
-      units: 'm/s',
+      units: 'km/h',
       selected: true,
-      value: [1, 1.5],
-      decimals: 2,
-      max: 30,
+      value: [2, 5],
+      decimals: 0,
+      max: 50,
       step: 1
     },
     slopeAngle: {
@@ -80,13 +98,50 @@ export const nodeProps = {
       max: 100,
       step: 1
     },
+
     deadFuelMoisture: {
       geneLabel: 'site.moisture.dead.category',
       label: 'Dead fuel moisture (%)',
       code: 'deadFuelMoisture',
       units: '%',
       selected: true,
-      value: 10,
+      value: 30,
+      decimals: 0,
+      max: 100,
+      step: 1
+    },
+
+    dead1hFuelMoisture: {
+      geneLabel: 'site.moisture.dead.tl1h',
+      label: 'Dead 1h fuel moisture (%)',
+      code: 'dead1hFuelMoisture',
+      units: '%',
+      selected: true,
+      value: 30,
+      decimals: 0,
+      max: 100,
+      step: 1
+    },
+
+    dead10hFuelMoisture: {
+      geneLabel: 'site.moisture.dead.tl10h',
+      label: 'Dead 10h fuel moisture (%)',
+      code: 'dead10hFuelMoisture',
+      units: '%',
+      selected: true,
+      value: 30,
+      decimals: 0,
+      max: 100,
+      step: 1
+    },
+
+    dead100hFuelMoisture: {
+      geneLabel: 'site.moisture.dead.tl100h',
+      label: 'Dead 100h fuel moisture (%)',
+      code: 'dead100hFuelMoisture',
+      units: '%',
+      selected: true,
+      value: 30,
       decimals: 0,
       max: 100,
       step: 1
@@ -98,7 +153,7 @@ export const nodeProps = {
       code: 'liveFuelMoisture',
       units: '%',
       selected: true,
-      value: 10,
+      value: 70,
       decimals: 0,
       max: 100,
       step: 1
@@ -113,6 +168,40 @@ export const nodeProps = {
       value: 1,
       decimals: 0,
       max: 24,
+      step: 1
+    },
+
+    baseHeight: {
+      geneLabel: 'site.canopy.crown.baseHeight',
+      label: 'Canopy base height (m)',
+      code: 'baseHeight',
+      units: 'm',
+      selected: true,
+      value: 5,
+      decimals: 0,
+      max: 20,
+      step: 1
+    },
+    totalHeight: {
+      geneLabel: 'site.canopy.crown.totalHeight',
+      label: 'Canopy total height (m)',
+      code: 'totalHeight',
+      units: 'm',
+      selected: true,
+      value: 5,
+      decimals: 0,
+      max: 20,
+      step: 1
+    },
+    bulkDensity: {
+      geneLabel: 'site.canopy.fuel.bulkDensity',
+      label: 'Canopy buld density (kg/m3)',
+      code: 'bulkDensity',
+      units: 'kg/m3',
+      selected: true,
+      value: 1,
+      decimals: 0,
+      max: 20,
       step: 1
     }
   },
@@ -138,7 +227,7 @@ export const nodeProps = {
       units: 'J/kg',
       selected: false,
       value: 0.2,
-      decimals: 2,
+      decimals: 0,
       max: 25000000,
       step: 100000
     },
@@ -150,7 +239,7 @@ export const nodeProps = {
       units: 'J/kg',
       selected: true,
       value: 0.2,
-      decimals: 2,
+      decimals: 0,
       max: 25000000,
       step: 100000
     },
@@ -163,7 +252,7 @@ export const nodeProps = {
       selected: true,
       value: 0.2,
       decimals: 2,
-      max: 10,
+      max: 2,
       step: 0.1
     },
 
@@ -175,7 +264,7 @@ export const nodeProps = {
       selected: true,
       value: 0.2,
       decimals: 2,
-      max: 10,
+      max: 2,
       step: 0.1
     },
 
@@ -187,7 +276,7 @@ export const nodeProps = {
       selected: true,
       value: 0.2,
       decimals: 2,
-      max: 10,
+      max: 2,
       step: 0.1
     },
 

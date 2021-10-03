@@ -8,11 +8,12 @@ export const defaultConfig = {
     // There are no secondary fuels
     ['configure.fuel.secondary', ['none', 'catalog', 'behave', 'chaparral', 'palmettoGallberry', 'westernAspen'][0]],
     // Fuel moistures are entered by dead and live category
-    ['configure.fuel.moisture', ['individual', 'liveCategory', 'category', 'catalog'][2]],
+    ['configure.fuel.moisture', ['individual', 'liveCategory', 'category', 'catalog'][0]],
     // Cured herb fraction is estimated from herb moisture, rather than directly input
     ['configure.fuel.curedHerbFraction', ['input', 'estimated'][1]],
     // Wind speed is at midflame height
-    ['configure.wind.speed', 'at10m'],
+    ['configure.wind.speed', 'atMidflame'],
+    ['configure.fire.effectiveWindSpeedLimit', ['applied', 'ignored'][1]],
     // Wind direction is assumed to be upslope
     ['configure.wind.direction', ['sourceFromNorth', 'headingFromUpslope', 'upslope'][2]],
     // Slope steepness is entered as the ratio of vertical rise / horizontal reach
@@ -22,12 +23,13 @@ export const defaultConfig = {
     // The folloiwng is mute since we are using the fuel catalog (and not directly entering chaparral fuels)
     ['configure.fuel.chaparralTotalLoad', ['input', 'estimated'][0]],
     // The following is mute since there is no secondary fuel type
-    ['configure.fire.weightingMethod', ['arithmetic', 'expected', 'harmonic'][0]]
+    ['configure.fire.weightingMethod', ['arithmetic', 'expected', 'harmonic'][0]],
+    ['configure.fire.firelineIntensity', ['firelineIntensity', 'flameLength'][1]]
   ],
 
   defaultFuelDomain: 'behave',
 
-  defaultFuels: ['sh6', 'sh8', 'gs3', 'gr6', 'gr8'],
+  defaultFuels: ['8', 'sh6', 'sh8', 'gr3', 'gr6'],
   defaultDeadMoisture: {
     key: 'site.moisture.dead.category',
     value: [0.05]
