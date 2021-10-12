@@ -1,25 +1,25 @@
 export const exFuels = {
-  8: {
+  tl3: {
     domain: 'behave',
-    label: 'Short needle litter',
-    displayLabel: 'Needle litter',
-    number: 8,
-    code: '8',
-    depth: 0.2,
-    deadMext: 0.3,
-    dead1Load: 0.069,
-    dead10Load: 0.046,
-    dead100Load: 0.115,
+    label: 'Moderate load conifer litter',
+    displayLabel: 'Conifer litter',
+    number: 183,
+    code: 'tl3',
+    depth: 0.3,
+    deadMext: 0.2,
+    dead1Load: 0.02295684113865932,
+    dead10Load: 0.10101010101010101,
+    dead100Load: 0.12855831037649218,
     totalHerbLoad: 0,
     liveStemLoad: 0,
     dead1Savr: 2000,
-    liveHerbSavr: 1500,
-    liveStemSavr: 1500,
+    liveHerbSavr: 1800,
+    liveStemSavr: 1600,
     deadHeat: 8000,
     liveHeat: 8000,
     photo: 'https://drive.google.com/uc?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT'
-
+    description: 'Moderate load conifer litter consisting of needles, twigs and light load of coarse fuels',
     thumbnail: 'thumbnail_heather.jpeg'
   },
 
@@ -45,6 +45,7 @@ export const exFuels = {
     photo: 'https://drive.google.com/uc?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT'
 
+    description: 'Primary carrier of fire in sh6 is woody shrubs and shrub litter. Dense, moderatelly tall (0.6m) shrub, no coarse fuels, little or no harbaceous fuel.',
     thumbnail: 'thumbnail_heather.jpeg'
   },
   sh8: {
@@ -68,6 +69,7 @@ export const exFuels = {
     liveHeat: 8000,
     photo: 'https://drive.google.com/uc?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT'
+    description: 'Primary carrier of fire in sh8 is woody shrubs and shrub litter. Dense, relatively tall (0.9m) shrubs, very light load of coarse fuels, little or no harbaceous fuel.',
     thumbnail: 'thumbnail_heather.jpeg'
   },
 
@@ -91,6 +93,7 @@ export const exFuels = {
     deadHeat: 8000,
     liveHeat: 8000,
     photo: 'https://drive.google.com/uc?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1',
+    description: 'Continious, coarse, humid-climate grass. Grass and herb fuel load is relatively light, fuel bed depth is about 0.6m. Shrubs are not present in significant quantity to affect fire behaviour.',
     thumbnail: 'thumbnail_molinia.jpeg'
   },
 
@@ -114,6 +117,7 @@ export const exFuels = {
     deadHeat: 9000,
     liveHeat: 9000,
     photo: 'https://drive.google.com/uc?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1',
+    description: 'Continious, coarse, humid-climate grass. Grass and herb fuel load is greater than sh3, fuel bed depth is about 0.5m. Shrubs are not present in significant quantity to affect fire behaviour.',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1'
     thumbnail: 'thumbnail_molinia.jpeg'
   }

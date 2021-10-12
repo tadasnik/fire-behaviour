@@ -5,6 +5,7 @@
         <b-slider
           :value="value"
           :max="max"
+          :min="min"
           :step="step"
           indicator
           lazy
@@ -39,6 +40,10 @@ export default {
       required: true
     },
     max: {
+      type: Number,
+      required: true
+    },
+    min: {
       type: Number,
       required: true
     },

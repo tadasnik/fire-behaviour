@@ -29,21 +29,5 @@ export const defaultConfig = {
 
   defaultFuelDomain: 'behave',
 
-  defaultFuels: ['8', 'sh6', 'sh8', 'gr3', 'gr6'],
-  defaultDeadMoisture: {
-    key: 'site.moisture.dead.category',
-    value: [0.05]
-  },
-  defaultLiveMoisture: {
-    key: 'site.moisture.live.category',
-    value: [0.5] // fraction of fuel ovendry weight
-  },
-  defaultWindSpeed: {
-    key: 'site.wind.speed.at10m',
-    value: [2, 2.5] // m/s
-  },
-  defaultSlopeSteepness: {
-    key: 'site.slope.steepness.degrees',
-    value: [0] // vertical rise / horizontal reach
-  }
+  defaultFuels: ['tl3', 'sh6', 'sh8', 'gr3', 'gr6']
 }

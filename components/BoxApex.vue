@@ -41,13 +41,19 @@ export default {
         tooltip: {
           enebled: true,
           x: {
-            show: true
+            show: false
           },
           y: {
             formatter: (value) => {
-              return value.toFixed(2)
+              return value.toFixed(1)
             }
           }
+        },
+        yaxis: {
+          decimalsInFloat: 1
+        },
+        xaxis: {
+          decimalsInFloat: 1
         },
         annotations: {
           yaxis: [

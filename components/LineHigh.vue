@@ -1,0 +1,68 @@
+<template>
+  <div>
+    <highchart
+      :options="chartOptions"
+      :update="watchers"
+    />
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    series: {
+      type: Array,
+      required: true
+    },
+    xlabel: {
+      type: String,
+      required: true
+    },
+    ylabel: {
+      type: String,
+      required: true
+    }
+  },
+
+  data () {
+    return {
+      watchers: ['options.series', 'options.yAxis', 'options.xAxis']
+    }
+  },
+
+  computed: {
+    chartOptions () {
+      return {
+        chart: {
+          type: 'line',
+          redraw: true,
+          animation: true,
+          zoomType: 'xy',
+          panning: true,
+          panKey: 'shift'
+        },
+        boost: { enabled: true },
+        tooltip: {
+        },
+        series: this.series,
+        yAxis: {
+          title: {
+            text: this.ylabel
+          }
+        },
+        xAxis: {
+          title: {
+            text: this.xlabel
+          }
+        },
+        title: {
+          text: ''
+        },
+        credits: {
+          enabled: false
+        }
+      }
+    }
+  }
+}
+</script>

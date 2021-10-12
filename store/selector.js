@@ -7,6 +7,10 @@ export const state = () => ({
   siteInputs: {},
   canopyInputs: {},
   results: {},
+  rangeInput: 'windSpeed',
+  rangeOutput: 'fireFlameLength',
+  selectedFuels: ['tl3', 'sh6', 'sh8', 'gr3', 'gr6'],
+  selectedOutputs: ['fireFlameLength', 'fireSpreadRate'],
   defaultDagConfig: defaultConfig.defaultDagConfig
 })
 
@@ -43,6 +47,13 @@ export const mutations = {
     state.results = results
   },
 
+  'UPDATE_RANGE_INPUT' (state, payload) {
+    state.rangeInput = payload
+  },
+
+  'UPDATE_RANGE_OUTPUT' (state, payload) {
+    state.rangeOutput = payload
+  },
   'UPDATE_RESULTS' (state, { output, fuel, payload }) {
     state.results[output][fuel] = payload
   },
@@ -56,6 +67,19 @@ export const mutations = {
   },
   'UPDATE_FUEL_DOMAIN' (state, payload) {
     state.fuelDomain = payload
+  },
+
+  'UPDATE_SELECTED_OUTPUTS' (state, { key, payload, single }) {
+    if (single) {
+      state.selectedOutputs = [key]
+    } else if (payload !== true) {
+      const index = state.selectedOutputs.indexOf(key)
+      if (index > -1) {
+        state.selectedOutputs.splice(index, 1)
+      }
+    } else {
+      state.selectedOutputs.push(key)
+    }
   }
 }
 
@@ -70,6 +94,15 @@ export const actions = {
     commit('INIT_FUEL_MODELS', payload)
   },
 
+  updateRangeInput: ({ commit }, payload) => {
+    console.log('store range input', payload)
+    commit('UPDATE_RANGE_INPUT', payload)
+  },
+
+  updateRangeOutput: ({ commit }, payload) => {
+    commit('UPDATE_RANGE_OUTPUT', payload)
+  },
+
   updateFuelProp: ({ commit }, fuel, param, payload) => {
     commit('UPDATE_FUEL_PROP', fuel, param, payload)
   },
@@ -80,6 +113,10 @@ export const actions = {
 
   initCanopyInputs: ({ commit }, payload) => {
     commit('INIT_CANOPY_INPUTS', payload)
+  },
+
+  updateSelectedOutputs: ({ commit }, label, payload, single) => {
+    commit('UPDATE_SELECTED_OUTPUTS', label, payload, single)
   },
 
   updateSiteInputProp: ({ commit }, input, prop, payload) => {
@@ -103,15 +140,12 @@ export const getters = {
   defaultDagConfig: (state) => {
     return state.defaultDagConfig
   },
-
   fuelModels: (state) => {
     return state.fuelModels
   },
-
   siteInputs: (state) => {
     return state.siteInputs
   },
-
   canopyInputs: (state) => {
     return state.canopyInputs
   },
@@ -123,5 +157,18 @@ export const getters = {
   },
   results: (state) => {
     return state.results
+  },
+  rangeInput: (state) => {
+    return state.rangeInput
+  },
+  rangeOutput: (state) => {
+    return state.rangeOutput
+  },
+  selectedFuels: (state) => {
+    return state.selectedFuels
+  },
+  selectedOutputs: (state) => {
+    return state.selectedOutputs
   }
+
 }

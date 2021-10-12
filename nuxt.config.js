@@ -16,13 +16,18 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css'
+      }
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/css/main-style.scss'
+    '~/assets/css/main-style.scss',
+    '@fortawesome/fontawesome-free/css/all.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -52,7 +57,9 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/buefy
-    ['nuxt-buefy', { css: false }]
+    'nuxt-material-design-icons',
+    ['nuxt-buefy', { css: false, materialDesignIcons: true }],
+    'nuxt-highcharts'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

@@ -18,11 +18,12 @@
       <div class="card-content">
         <div class="block">
           <fuel-control
-            v-for="{ label, code, max, step } in getInputNodes"
+            v-for="{ label, code, max, min, step } in getInputNodes"
             :key="label"
             :title="label"
             :value="getValue(code)"
             :max="max"
+            :min="min"
             :step="step"
             indicator
             lazy

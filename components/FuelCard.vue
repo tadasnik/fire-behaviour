@@ -8,8 +8,11 @@
           role="button"
           aria-controls="contentIdForA11y3"
         >
-          <p class="card-header-title is-size-6" is-size-1>
-            {{ fuelModelCode }}: {{ getFuelModelLabel }}
+          <figure class="image is-64x64">
+            <img :src="require(`~/assets/images/${getThumbnail}`)" alt="Placeholder image">
+          </figure>
+          <p class="card-header-title is-size-6">
+            {{ getFuelModelDisplayLabel }}
           </p>
           <a class="card-header-icon">
             <b-icon :icon="props.open ? 'menu-down' : 'menu-up'" />
@@ -17,14 +20,18 @@
         </div>
       </template>
       <div class="card-content">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img :src="getURL" alt="Placeholder image">
+          </figure>
+        </div>
         <div class="block">
           <fuel-control
-            v-for="{ label, catalogParam, max, min, step } in getFuelNodes"
+            v-for="{ label, catalogParam, max, step } in getFuelNodes"
             :key="label+fuelModelCode"
             :title="label"
             :value="getValue(catalogParam)"
             :max="max"
-            :min="min"
             :step="step"
             indicator
             lazy
@@ -72,8 +79,16 @@ export default {
       fuelModels: 'selector/fuelModels'
     }),
 
-    getFuelModelLabel () {
-      return this.fuelModels[this.fuelModelCode].label
+    getURL () {
+      return this.fuelModels[this.fuelModelCode].photo
+    },
+
+    getThumbnail () {
+      return this.fuelModels[this.fuelModelCode].thumbnail
+    },
+
+    getFuelModelDisplayLabel () {
+      return this.fuelModels[this.fuelModelCode].displayLabel
     },
 
     getFuelNodes () {
@@ -103,39 +118,8 @@ export default {
       return this.fuelModels[this.fuelModelCode][param]
     },
 
-    getValueConvert (param) {
-      const val = this.fuelModels[this.fuelModelCode][param]
-      if (param === 'deadHeat' || param === 'liveHeat') {
-        if (Array.isArray(val)) {
-          const valCopy = [...val]
-          valCopy.forEach((element, index) => {
-            valCopy[index] = Math.round(element / 1000)
-          })
-          return valCopy
-        } else {
-          return Math.round(val / 1000)
-        }
-      }
-    },
-
     setValue (param, payload) {
       this.$store.dispatch('selector/updateFuelProp', { fuel: this.fuelModelCode, param, payload })
-      this.$emit('change')
-    },
-
-    setValueConvert (param, payload) {
-      if (param === 'deadHeat' || param === 'liveHeat') {
-        if (Array.isArray(payload)) {
-          const copyPayload = [...payload]
-          copyPayload.forEach((element, index) => {
-            copyPayload[index] = Math.round(element * 1000)
-          })
-          this.$store.dispatch('selector/updateFuelProp', { fuel: this.fuelModelCode, prop: param, value: copyPayload })
-        } else {
-          const copyPayload = payload.valueOf() * 1000
-          this.$store.dispatch('selector/updateFuelProp', { fuel: this.fuelModelCode, prop: param, value: copyPayload })
-        }
-      }
       this.$emit('change')
     },
 
