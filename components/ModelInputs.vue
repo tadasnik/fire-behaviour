@@ -3,13 +3,15 @@
     <h4 class="title is-4">
       BehavePlus inputs
     </h4>
+
     <div class="block">
       <slide-radio
-        v-for="{ label, code, max, min, step, description } in getInputNodes"
+        v-for="{ label, units, code, max, min, step, description } in getInputNodes"
         :key="label"
         :title="label"
         :value="getValue(code)"
         :code="code"
+        :units="units"
         :max="max"
         :min="min"
         :step="step"
@@ -20,6 +22,9 @@
         @changeInput="resetRangeInput(code, $event)"
       />
     </div>
+    <b-button class="is-warning" @click="resetInputs()">
+      Reset default values
+    </b-button>
   </section>
 </template>
 
@@ -70,14 +75,19 @@ export default {
 
   methods: {
 
+    resetInputs () {
+      Object.keys(this.nodeProps).forEach((key) => {
+        const defVal = this.nodeProps[key].defValue
+        this.updateSiteInput(key, defVal)
+      })
+      this.setRangeInput(this.rangeInput)
+      this.$emit('change')
+    },
+
     resetRangeInput (code) {
-      console.log('cur range input', this.rangeInput)
-      console.log('seting range input', code)
       // update previous rangeInput value to single value
       const defValue = this.siteInputs[this.rangeInput].defValue
-      console.log('curVal', defValue)
       this.updateSiteInput(this.rangeInput, defValue)
-      console.log('range input', this.rangeInput)
       // change rangeInput value
       this.$store.dispatch('selector/updateRangeInput', code)
       this.setRangeInput(this.rangeInput)
@@ -92,10 +102,8 @@ export default {
 
     updateSiteInput (input, payload) {
       const prop = 'value'
-      console.log('changing value', input, payload)
       if (Array.isArray(payload)) {
         payload = this.makeRange(payload, 20)
-        console.log(input, 'values', payload)
         this.$store.dispatch('selector/updateSiteInputProp',
           { input, prop, payload })
       } else {
@@ -105,13 +113,10 @@ export default {
     },
 
     makeRange (origArray, noElements) {
-      console.log(origArray)
       const vMin = Math.min(origArray[0], origArray[1])
       const vMax = Math.max(origArray[0], origArray[1])
       const increments = ((vMax - vMin) / noElements)
-      console.log(increments)
       const values = [...Array(noElements + 1)].map((_, y) => vMin + increments * y)
-      console.log(values)
       return values
     },
 
@@ -123,7 +128,6 @@ export default {
     },
 
     triggerArray (param, payload) {
-      console.log()
       if (payload === true) {
         const orig = this.getValue(param)
         let val = []

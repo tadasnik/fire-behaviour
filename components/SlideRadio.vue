@@ -4,13 +4,13 @@
       <b-radio
         :value="rangeInput"
         :native-value="code"
-        type="is-primary"
+        type="is-danger"
         @input="setRangeInput()"
       />
     </b-field>
     <b-field custom-class="is-small" expanded>
       <template #label>
-        {{ title }}
+        {{ title }} ({{ units }})
         <b-tooltip type="is-light" size="is-large" multilined :label="description">
           <b-icon size="is-small" icon="help-circle-outline" />
         </b-tooltip>
@@ -20,6 +20,7 @@
         :max="max"
         :min="min"
         :step="step"
+        type="is-danger"
         indicator
         lazy
         @change="passValue($event)"
@@ -43,6 +44,10 @@ export default {
       required: true
     },
     code: {
+      type: String,
+      required: true
+    },
+    units: {
       type: String,
       required: true
     },
@@ -73,7 +78,6 @@ export default {
   methods: {
 
     setRangeInput () {
-      console.log('radio emited')
       this.$emit('changeInput', this.code)
     },
 

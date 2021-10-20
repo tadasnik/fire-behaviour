@@ -1,5 +1,8 @@
 <template>
   <section>
+    <h4 class="title is-4">
+      BehavePlus outputs
+    </h4>
     <b-field label="Select model output (Y axis)">
       <b-select
         placeholder="Select output variable"
@@ -51,7 +54,7 @@
         </div>
       </b-modal>
       <p class="control">
-        <b-button type="is-primary" label="" icon-right="mdi mdi-help-circle-outline" @click="isCardModalActive = true" />
+        <b-button type="is-warning" label="" icon-right="mdi mdi-help-circle-outline" @click="isCardModalActive = true" />
       </p>
     </b-field>
     <box-high
@@ -179,7 +182,7 @@ export default {
       const optionsText = []
       Object.keys(this.outputNodes).forEach((key) => {
         const outNode = this.outputNodes[key]
-        if (outNode.group === filterString) {
+        if (outNode.group === filterString && outNode.selected) {
           const dispString = this.outputNodes[key].label
           optionsText.push([key, dispString])
         }
@@ -201,13 +204,9 @@ export default {
     },
 
     resetRangeInput (code) {
-      console.log('cur range input', this.rangeInput)
-      console.log('seting range input', code)
       // update previous rangeInput value to single value
       const defValue = this.siteInputs[this.rangeInput].defValue
-      console.log('curVal', defValue)
       this.updateSiteInput(this.rangeInput, defValue)
-      console.log('range input', this.rangeInput)
       // change rangeInput value
       this.$store.dispatch('selector/updateRangeInput', code)
       this.setRangeInput(this.rangeInput)
@@ -224,7 +223,6 @@ export default {
       const prop = 'value'
       if (Array.isArray(payload)) {
         payload = this.makeRange(payload, 20)
-        console.log(input, 'values', payload)
         this.$store.dispatch('selector/updateSiteInputProp',
           { input, prop, payload })
       } else {
@@ -233,13 +231,10 @@ export default {
     },
 
     makeRange (origArray, noElements) {
-      console.log(origArray)
       const vMin = Math.min(origArray[0], origArray[1])
       const vMax = Math.max(origArray[0], origArray[1])
       const increments = ((vMax - vMin) / noElements)
-      console.log(increments)
       const values = [...Array(noElements + 1)].map((_, y) => vMin + increments * y)
-      console.log(values)
       return values
     },
 

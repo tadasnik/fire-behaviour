@@ -6,6 +6,7 @@
         :max="max"
         :step="step"
         :disabled="disabled"
+        type="is-danger"
         indicator
         lazy
         @change="passValue($event)"

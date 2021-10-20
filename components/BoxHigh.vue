@@ -1,10 +1,12 @@
 <template>
   <div>
-    <highchart
-      :more="true"
-      :options="chartOptions"
-      :update="watchers"
-    />
+    <client-only>
+      <highchart
+        :more="true"
+        :options="chartOptions"
+        :update="watchers"
+      />
+    </client-only>
   </div>
 </template>
 
@@ -32,6 +34,66 @@ export default {
   },
 
   computed: {
+    getPlotlines () {
+      if (this.ylabel === 'Fire flame length (m)') {
+        return [{
+          value: 0.5,
+          color: '#eae2b7',
+          width: 1,
+          zIndex: 10,
+          label: {
+            text: 'Moderate intensity',
+            align: 'left',
+            style: {
+              color: '#eae2b7'
+            }
+          }
+        },
+        {
+          value: 1.5,
+          color: '#fcbf49',
+          width: 1,
+          zIndex: 10,
+          label: {
+            text: 'High intensity',
+            align: 'left',
+            style: {
+              color: '#fcbf49'
+            }
+          }
+        },
+        {
+          value: 3.5,
+          color: '#f77f00',
+          width: 1,
+          zIndex: 10,
+          label: {
+            text: 'Extreme intensity',
+            align: 'left',
+            style: {
+              color: '#f77f00'
+            }
+          }
+        },
+        {
+          value: 8,
+          color: '#d62828',
+          width: 1,
+          zIndex: 10,
+          label: {
+            text: 'Beyond extreme...',
+            align: 'left',
+            style: {
+              color: '#d62828'
+            }
+          }
+        }
+
+        ]
+      } else {
+        return []
+      }
+    },
     chartOptions () {
       return {
         chart: {
@@ -47,6 +109,8 @@ export default {
         },
 
         series: [{
+          color: '#003049',
+          fillColor: '#FCBF49',
           name: this.yLabel,
           data: this.data
         }],
@@ -61,19 +125,7 @@ export default {
         yAxis: {
           title: {
             text: this.ylabel
-          },
-          plotLines: [{
-            value: 932,
-            color: 'red',
-            width: 1,
-            label: {
-              text: 'Theoretical mean: 932',
-              align: 'center',
-              style: {
-                color: 'gray'
-              }
-            }
-          }]
+          }
         },
         legend: {
           enabled: false

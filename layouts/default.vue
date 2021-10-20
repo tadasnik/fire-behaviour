@@ -1,18 +1,23 @@
 <template>
   <div>
     <nav
-      class="navbar header has-shadow is-primary"
+      class="navbar header has-shadow is-warning"
       role="navigation"
       aria-label="main navigation"
     >
       <div class="navbar-brand">
-        <a
+        <nuxt-link
           class="navbar-item"
-          href="/"
+          to="/"
         >
           UKFDRS/BehavePlus
-        </a>
-
+        </nuxt-link>
+        <nuxt-link
+          class="navbar-item"
+          to="table"
+        >
+          Table View
+        </nuxt-link>
         <div class="navbar-burger">
           <span />
           <span />

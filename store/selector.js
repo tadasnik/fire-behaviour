@@ -9,7 +9,7 @@ export const state = () => ({
   results: {},
   rangeInput: 'windSpeed',
   rangeOutput: 'fireFlameLength',
-  selectedFuels: ['tl3', 'sh6', 'sh8', 'gr3', 'gr6'],
+  selectedFuels: ['sh1', 'sh4', 'sh6', 'sh8', 'gr2', 'gr3', 'gr6', 'gr8', 'gs3'],
   selectedOutputs: ['fireFlameLength', 'fireSpreadRate'],
   defaultDagConfig: defaultConfig.defaultDagConfig
 })

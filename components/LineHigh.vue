@@ -1,9 +1,11 @@
 <template>
   <div>
-    <highchart
-      :options="chartOptions"
-      :update="watchers"
-    />
+    <client-only>
+      <highchart
+        :options="chartOptions"
+        :update="watchers"
+      />
+    </client-only>
   </div>
 </template>
 

@@ -17,17 +17,62 @@ export const exFuels = {
     liveStemSavr: 1600,
     deadHeat: 8000,
     liveHeat: 8000,
-    photo: 'https://drive.google.com/uc?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT',
+    photo: 'https://drive.google.com/uc?id=1hP5p_zWhXl7eOIrMfKy11HgZacNe-hnC',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT'
     description: 'Moderate load conifer litter consisting of needles, twigs and light load of coarse fuels',
-    thumbnail: 'thumbnail_heather.jpeg'
+    thumbnail: 'thumbnail_conifer.jpeg'
+  },
+  sh1: {
+    domain: 'behave',
+    label: 'Low load, dry climate shrub',
+    number: 141,
+    code: 'sh1',
+    depth: 1,
+    deadMext: 0.15,
+    dead1Load: 0.01147842056932966,
+    dead10Load: 0.01147842056932966,
+    dead100Load: 0,
+    totalHerbLoad: 0.0068870523415977955,
+    liveStemLoad: 0.05968778696051423,
+    dead1Savr: 2000,
+    liveHerbSavr: 1800,
+    liveStemSavr: 1600,
+    deadHeat: 8000,
+    liveHeat: 8000,
+    photo: 'https://drive.google.com/uc?id=11pjhmw4kdvx2m7scm5h2cukfksgazpz5',
+    // thumbnail: 'https://drive.google.com/thumbnail?id=1ru8sb0zb2vwpflexd-mxwkkwjkdobkdt'
+
+    description: 'primary carrier of fire in sh6 is woody shrubs and shrub litter. dense, moderatelly tall (0.6m) shrub, no coarse fuels, little or no harbaceous fuel. characteristic species in uk heather',
+    thumbnail: 'thumbnail_heather_low.jpeg'
+  },
+  sh4: {
+    domain: 'behave',
+    label: 'Low load, humid climate timber-shrub',
+    number: 144,
+    code: 'sh4',
+    depth: 3,
+    deadMext: 0.3,
+    dead1Load: 0.03902662993572084,
+    dead10Load: 0.05280073461891643,
+    dead100Load: 0.009182736455463728,
+    totalHerbLoad: 0,
+    liveStemLoad: 0.11707988980716252,
+    dead1Savr: 2000,
+    liveHerbSavr: 1800,
+    liveStemSavr: 1600,
+    deadHeat: 8000,
+    liveHeat: 8000,
+    photo: 'https://drive.google.com/uc?id=11pjhmw4kdvx2m7scm5h2cukfksgazpz5',
+    // thumbnail: 'https://drive.google.com/thumbnail?id=1ru8sb0zb2vwpflexd-mxwkkwjkdobkdt'
+    description: '',
+    thumbnail: 'thumbnail_heather_low.jpeg'
   },
 
   sh6: {
     domain: 'behave',
     selected: true,
     label: 'Low load, humid climate shrub',
-    displayLabel: 'Low load heather',
+    displayLabel: 'Low load shrub',
     number: 146,
     code: 'sh6',
     depth: 2,
@@ -42,17 +87,17 @@ export const exFuels = {
     liveStemSavr: 1600,
     deadHeat: 8000,
     liveHeat: 8000,
-    photo: 'https://drive.google.com/uc?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT',
-    // thumbnail: 'https://drive.google.com/thumbnail?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT'
+    photo: 'https://drive.google.com/uc?id=11pjhmw4kdvx2m7scm5h2cukfksgazpz5',
+    // thumbnail: 'https://drive.google.com/thumbnail?id=1ru8sb0zb2vwpflexd-mxwkkwjkdobkdt'
 
-    description: 'Primary carrier of fire in sh6 is woody shrubs and shrub litter. Dense, moderatelly tall (0.6m) shrub, no coarse fuels, little or no harbaceous fuel.',
-    thumbnail: 'thumbnail_heather.jpeg'
+    description: 'primary carrier of fire in sh6 is woody shrubs and shrub litter. dense, moderatelly tall (0.6m) shrub, no coarse fuels, little or no harbaceous fuel. characteristic species in uk heather',
+    thumbnail: 'thumbnail_heather_low.jpeg'
   },
   sh8: {
     domain: 'behave',
     selected: true,
     label: 'High load, humid climate shrub',
-    displayLabel: 'High load heather',
+    displayLabel: 'High load shrub',
     number: 148,
     code: 'sh8',
     depth: 3,
@@ -67,17 +112,40 @@ export const exFuels = {
     liveStemSavr: 1600,
     deadHeat: 8000,
     liveHeat: 8000,
-    photo: 'https://drive.google.com/uc?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT',
+    photo: 'https://drive.google.com/uc?id=1DMRKqNK9adUfmBKdyVzie0r_TehZM2Ho',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1RU8sB0Zb2VWPFlexd-mxwKkWjkDObkdT'
-    description: 'Primary carrier of fire in sh8 is woody shrubs and shrub litter. Dense, relatively tall (0.9m) shrubs, very light load of coarse fuels, little or no harbaceous fuel.',
+    description: 'Primary carrier of fire in sh8 is woody shrubs and shrub litter. Dense, relatively tall (0.9m) shrubs, very light load of coarse fuels, little or no harbaceous fuel. Mature old-growth heather can be represented by this fuel model.',
     thumbnail: 'thumbnail_heather.jpeg'
+  },
+
+  gr2: {
+    domain: 'behave',
+    label: 'Low load, dry climate grass',
+    displayLabel: 'Low load dry grass',
+    number: 102,
+    code: 'gr2',
+    depth: 1,
+    deadMext: 0.15,
+    dead1Load: 0.004591368227731864,
+    dead10Load: 0,
+    dead100Load: 0,
+    totalHerbLoad: 0.04591368227731864,
+    liveStemLoad: 0,
+    dead1Savr: 2000,
+    liveHerbSavr: 1800,
+    liveStemSavr: 1500,
+    deadHeat: 8000,
+    liveHeat: 8000,
+    photo: 'https://drive.google.com/uc?id=1DngrfrQovlY8jexpnLSpOOWmgQzyW-Qc',
+    description: '',
+    thumbnail: 'thumbnail_molinia.jpeg'
   },
 
   gr3: {
     domain: 'behave',
     selected: true,
     label: 'Low load, very coarse, humid climate grass',
-    displayLabel: 'Low load molinia grass',
+    displayLabel: 'Low load  grass',
     number: 103,
     code: 'gr3',
     depth: 2,
@@ -92,8 +160,8 @@ export const exFuels = {
     liveStemSavr: 1500,
     deadHeat: 8000,
     liveHeat: 8000,
-    photo: 'https://drive.google.com/uc?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1',
-    description: 'Continious, coarse, humid-climate grass. Grass and herb fuel load is relatively light, fuel bed depth is about 0.6m. Shrubs are not present in significant quantity to affect fire behaviour.',
+    photo: 'https://drive.google.com/uc?id=1DngrfrQovlY8jexpnLSpOOWmgQzyW-Qc',
+    description: 'Continious, coarse, humid-climate grass. Grass and herb fuel load is relatively light, fuel bed depth is about 0.6m. Shrubs are not present in significant quantity to affect fire behaviour. Typical species in UK purple moor grass (molinia).',
     thumbnail: 'thumbnail_molinia.jpeg'
   },
 
@@ -101,10 +169,10 @@ export const exFuels = {
     domain: 'behave',
     selected: true,
     label: 'Moderate load, humid climate grass',
-    displayLabel: 'Moderate load molinia grass',
+    displayLabel: 'Moderate load grass',
     number: 106,
     code: 'gr6',
-    depth: 1.5,
+    depth: 3,
     deadMext: 0.4,
     dead1Load: 0.004591368227731864,
     dead10Load: 0,
@@ -116,9 +184,55 @@ export const exFuels = {
     liveStemSavr: 1500,
     deadHeat: 9000,
     liveHeat: 9000,
-    photo: 'https://drive.google.com/uc?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1',
-    description: 'Continious, coarse, humid-climate grass. Grass and herb fuel load is greater than sh3, fuel bed depth is about 0.5m. Shrubs are not present in significant quantity to affect fire behaviour.',
+    photo: 'https://drive.google.com/uc?id=13jO8wF9HIxXwVfTvT-pb3-QLFGfWlrIP',
+    description: 'Continious, coarse, humid-climate grass. Grass and herb fuel load is greater than sh3, fuel bed depth up to about 1 metre. Shrubs are not present in significant quantity to affect fire behaviour. Characteristic vegetation purple moor grass, large amounts of dead herbaceous material from previous seasons.',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1'
-    thumbnail: 'thumbnail_molinia.jpeg'
+    thumbnail: 'thumbnail_grass_2.jpeg'
+  },
+  gr8: {
+    domain: 'behave',
+    label: 'High load, very coarse, humid climate grass',
+    number: 108,
+    code: 'gr8',
+    depth: 4,
+    deadMext: 0.3,
+    dead1Load: 0.02295684113865932,
+    dead10Load: 0.0459139,
+    dead100Load: 0,
+    totalHerbLoad: 0.33516988062442604,
+    liveStemLoad: 0,
+    dead1Savr: 1500,
+    liveHerbSavr: 1300,
+    liveStemSavr: 1500,
+    deadHeat: 8000,
+    liveHeat: 8000,
+    photo: 'https://drive.google.com/uc?id=13jO8wF9HIxXwVfTvT-pb3-QLFGfWlrIP',
+    description: '',
+    // thumbnail: 'https://drive.google.com/thumbnail?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1'
+    thumbnail: 'thumbnail_grass_2.jpeg'
+  },
+
+  gs3: {
+    domain: 'behave',
+    label: 'Moderate load, humid climate grass-shrub',
+    displayLabel: 'Moderate load grass-shrub',
+    number: 123,
+    code: 'gs3',
+    depth: 1.8,
+    deadMext: 0.4,
+    dead1Load: 0.013774104683195591,
+    dead10Load: 0.01147842056932966,
+    dead100Load: 0,
+    totalHerbLoad: 0.06657483930211203,
+    liveStemLoad: 0.057392102846648294,
+    dead1Savr: 1800,
+    liveHerbSavr: 1600,
+    liveStemSavr: 1600,
+    deadHeat: 8000,
+    liveHeat: 8000,
+    photo: 'https://drive.google.com/uc?id=13jO8wF9HIxXwVfTvT-pb3-QLFGfWlrIP',
+    description: 'Continious, coarse, humid-climate grass. Grass and herb fuel load is greater than sh3, fuel bed depth up to about 1 metre. Shrubs are not present in significant quantity to affect fire behaviour. Characteristic vegetation purple moor grass, large amounts of dead herbaceous material from previous seasons.',
+    // thumbnail: 'https://drive.google.com/thumbnail?id=1-PfA0oCl0YjQCRWefFHRyjwA2B129YW1'
+    thumbnail: 'thumbnail_grass_2.jpeg'
   }
 }
