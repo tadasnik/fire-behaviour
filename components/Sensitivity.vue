@@ -37,7 +37,11 @@
           </option>
         </optgroup>
       </b-select>
-      <b-modal v-model="isCardModalActive" :width="640" scroll="keep">
+      <b-modal
+        v-model="isCardModalActive"
+        :width="640"
+        scroll="keep"
+      >
         <div class="card">
           <div class="card-content">
             <div class="media">
@@ -54,7 +58,12 @@
         </div>
       </b-modal>
       <p class="control">
-        <b-button type="is-warning" label="" icon-right="mdi mdi-help-circle-outline" @click="isCardModalActive = true" />
+        <b-button
+          type="is-warning"
+          label=""
+          icon-right="mdi mdi-help-circle-outline"
+          @click="isCardModalActive = true"
+        />
       </p>
     </b-field>
     <box-high

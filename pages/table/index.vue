@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <section class="section">
-      <table-b :data="getFuels" :node-props="nodeProps" />
-    </section>
-  </div>
+  <table-b :data="getFuels" :node-props="nodeProps" />
 </template>
 
 <script>

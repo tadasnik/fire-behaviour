@@ -1,45 +1,52 @@
 <template>
   <div>
-    <section class="section">
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <div class="tile is-child box">
-            <h4 class="title is-4">
-              Fuel models
-            </h4>
+    <b-tabs position="is-centered">
+      <b-tab-item label="Model" icon="mdi mdi-cog">
+        <section class="section">
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                <h4 class="title is-4">
+                  Fuel models
+                </h4>
 
-            <div class="columns is-mobile is-multiline is-centered">
-              <fuel-tile
-                v-for="(fuel, index) in selectedFuels"
-                :key="fuel + index"
-                :fuel-model-code="fuel"
-                :node-props="nodeProps.fuelNodeProps"
-                @change="fuelModelRun(fuel)"
-              />
+                <div class="columns is-mobile is-multiline is-centered">
+                  <fuel-tile
+                    v-for="(fuel, index) in selectedFuels"
+                    :key="fuel + index"
+                    :fuel-model-code="fuel"
+                    :node-props="nodeProps.fuelNodeProps"
+                    @change="fuelModelRun(fuel)"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="tile is-ancestor">
-        <div class="tile is-5 is-parent">
-          <div class="tile is-child box">
-            <model-inputs
-              key="uidinputs"
-              :selected-inputs="selectedInputs"
-              :node-props="nodeProps.inputNodes"
-              @change="runModels()"
-            />
+          <div class="tile is-ancestor">
+            <div class="tile is-5 is-parent">
+              <div class="tile is-child box">
+                <model-inputs
+                  key="uidinputs"
+                  :selected-inputs="selectedInputs"
+                  :node-props="nodeProps.inputNodes"
+                  @change="runModels()"
+                />
+              </div>
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                <sensitivity
+                  @change="runOutputs()"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="tile is-parent">
-          <div class="tile is-child box">
-            <sensitivity
-              @change="runOutputs()"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      </b-tab-item>
+      <b-tab-item label="Table View" icon="mdi mdi-table">
+        <table-b :data="getFuels" :node-props="nodeProps" />
+      </b-tab-item>
+    </b-tabs>
   </div>
 </template>
 
@@ -69,6 +76,7 @@ export default {
       resultsObj: {},
       selectedInputs: [],
       selectedCanopyInputs: [],
+      behavePropNames: ['fireFlameLength', 'fireSpreadRate'],
       fuelPropNames: ['depth', 'dead1Load', 'dead10Load', 'dead100Load', 'totalHerbLoad', 'liveStemLoad']
     }
   },
@@ -85,6 +93,18 @@ export default {
       selectedOutputs: 'selector/selectedOutputs',
       selectedFuels: 'selector/selectedFuels'
     }),
+
+    getFuels () {
+      const resArray = []
+      this.selectedFuels.forEach((fuel) => {
+        const fuelModel = this.fuelModels[fuel]
+        this.behavePropNames.forEach((prop) => {
+          fuelModel[prop] = median(this.results[prop][fuel])
+        })
+        resArray.push(fuelModel)
+      })
+      return resArray
+    },
 
     heatDataset () {
       const resArray = []
@@ -156,7 +176,6 @@ export default {
     this.dag.setStorageClass(this.resultsObj)
     this.updateDagSelected()
     this.updateRequiredSiteInputs()
-    // console.log('created', this.canopyInputs)
     // this.updateRequiredCanopyInputs()
   },
 
@@ -277,18 +296,20 @@ export default {
       // const Ms = FuelCatalog.models().filter(item => item.domain === 'behave')
       // const fuelMs = {}
       // exFuels.forEach((item) => {
-      const tempFuels = { ...exFuels }
-      Object.keys(tempFuels).forEach((key) => {
-        Object.values(this.nodeProps.fuelNodeProps).forEach((fuelProp) => {
-          const node = this.dag.get(fuelProp.geneLabel)
-          const val = node._variant.displayValue(tempFuels[key][fuelProp.catalogParam])
-          tempFuels[key][fuelProp.catalogParam] = parseFloat(val)
+      if (Object.keys(this.fuelModels).length === 0) {
+        const tempFuels = { ...exFuels }
+        Object.keys(tempFuels).forEach((key) => {
+          Object.values(this.nodeProps.fuelNodeProps).forEach((fuelProp) => {
+            const node = this.dag.get(fuelProp.geneLabel)
+            const val = node._variant.displayValue(tempFuels[key][fuelProp.catalogParam])
+            tempFuels[key][fuelProp.catalogParam] = parseFloat(val)
+          })
         })
-      })
-      defaultConfig.defaultFuels.forEach((item) => {
-        tempFuels[item].selected = true
-      })
-      this.$store.dispatch('selector/initFuelModels', tempFuels)
+        defaultConfig.defaultFuels.forEach((item) => {
+          tempFuels[item].selected = true
+        })
+        this.$store.dispatch('selector/initFuelModels', tempFuels)
+      }
     },
 
     arrayToNative (node, values) {

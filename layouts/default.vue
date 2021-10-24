@@ -1,35 +1,30 @@
 <template>
   <div>
-    <nav
-      class="navbar header has-shadow is-warning"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <nuxt-link
-          class="navbar-item"
-          to="/"
-        >
-          UKFDRS/BehavePlus
-        </nuxt-link>
-        <nuxt-link
-          class="navbar-item"
-          to="table"
-        >
-          Table View
-        </nuxt-link>
-        <div class="navbar-burger">
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-    </nav>
+    <b-navbar type="is-primary">
+      <template #start>
+        <b-navbar-item href="/">
+          Home
+        </b-navbar-item>
+        <b-navbar-item href="table">
+          Model
+        </b-navbar-item>
+      </template>
 
+      <template #end>
+        <b-navbar-item tag="div">
+          <div class="buttons">
+            <a class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light">
+              Log in
+            </a>
+          </div>
+        </b-navbar-item>
+      </template>
+    </b-navbar>
     <section>
-      <div class="container">
-        <nuxt />
-      </div>
+      <nuxt />
     </section>
   </div>
 </template>
