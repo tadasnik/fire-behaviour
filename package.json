@@ -11,13 +11,7 @@
     "lint": "yarn lint:js"
   },
   "dependencies": {
-    "@cbevins/fire-behavior-simulator": "^0.7.4",
-    "d3": "^7.0.0",
-    "file-system": "^2.2.2",
-    "fs": "^0.0.1-security",
-    "v-click-outside": "^3.1.2",
-    "vue-apexcharts": "^1.6.1",
-    "vue-json-to-csv": "^1.1.8"
+    "@cbevins/fire-behavior-simulator": "^0.7.4"
   },
   "devDependencies": {
     "core-js": "^3.9.1",
@@ -25,6 +19,8 @@
     "@nuxtjs/eslint-config": "^6.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/style-resources": "^1.2.0",
+    "vue-json-to-csv": "^1.1.8",
+    "v-click-outside": "^3.1.2",
     "nuxt-highcharts": "^1.0.8",
     "nuxt-buefy": "^0.4.4",
     "nuxt-babel": "^1.0.1",
@@ -35,6 +31,7 @@
     "eslint-plugin-vue": "^7.10.0",
     "node-sass": "^6.0.1",
     "sass": "~1.32.12",
-    "sass-loader": "10"
+    "sass-loader": "10",
+    "d3": "^7.0.0"
   }
 }
