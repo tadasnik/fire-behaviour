@@ -1,5 +1,3 @@
-const pkg = require('./package')
-
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   ssr: false,
@@ -27,16 +25,11 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/css/main-style.scss',
-    '@fortawesome/fontawesome-free/css/all.css'
+    '~/assets/css/main-style.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {
-      src: '~/plugins/vue-apexchart.client.js',
-      mode: 'client'
-    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -67,16 +60,8 @@ export default {
   build: {
     transpile: [
       '@cbevins/fire-behavior-simulator',
-      'd3-scale',
-      'd3-array',
-      'd3-interpolate',
-      'd3-color',
-      'd3-format',
-      'd3-time',
       'd3',
-      'internmap',
-      /echarts/,
-      /zrender/
+      'internmap'
     ]
   }
 }
