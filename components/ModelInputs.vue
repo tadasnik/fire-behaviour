@@ -122,6 +122,7 @@ export default {
 
     getValue (param) {
       const values = this.siteInputs[param].value
+      console.log('getValue', param, values)
       if (Array.isArray(values)) {
         return [values[0], values.slice(-1)[0]]
       } else { return values }

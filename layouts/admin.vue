@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar type="is-primary">
+    <b-navbar type="is-danger">
       <template #start>
         <b-navbar-item
           tag="nuxt-link"
@@ -9,16 +9,11 @@
         >
           Home
         </b-navbar-item>
-      </template>
-      <template #end>
-        <b-navbar-item tag="div">
-          <b-button
-            tag="nuxt-link"
-            to="/admin"
-            type="is-warning"
-          >
-            admin
-          </b-button>
+        <b-navbar-item
+          tag="nuxt-link"
+          to="/admin/fuels"
+        >
+          Edit fuels
         </b-navbar-item>
       </template>
     </b-navbar>

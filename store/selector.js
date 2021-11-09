@@ -4,17 +4,24 @@ export const state = () => ({
   outputNodes: {},
   fuelDomain: '',
   fuelModels: {},
+  fuelModelsBehave: {},
   siteInputs: {},
   canopyInputs: {},
   results: {},
-  rangeInput: 'windSpeed',
+  token: null,
+  rangeInput: 'dead1hFuelMoisture',
   rangeOutput: 'fireFlameLength',
-  selectedFuels: ['sh1', 'sh4', 'sh6', 'sh8', 'gr2', 'gr3', 'gr6', 'gr8', 'gs3'],
+  selectedFuels: ['sh8', 'gr6'],
+  // selectedFuels: ['sh1', 'sh4', 'sh6', 'sh8', 'gr2', 'gr3', 'gr6', 'gr8', 'gs3'],
   selectedOutputs: ['fireFlameLength', 'fireSpreadRate'],
   defaultDagConfig: defaultConfig.defaultDagConfig
 })
 
 export const mutations = {
+
+  'INIT_BEHAVE_FUEL_MODELS' (state, payload) {
+    state.fuelModelsBehave = payload
+  },
 
   'INIT_FUEL_MODELS' (state, payload) {
     state.fuelModels = payload
@@ -90,10 +97,13 @@ export const actions = {
     commit('INIT_RESULTS')
   },
 
-  initFuelModels: ({ commit }, payload) => {
+  initFuelModels ({ commit }, payload) {
     commit('INIT_FUEL_MODELS', payload)
   },
 
+  initFuelBehaveModels: ({ commit }, payload) => {
+    commit('INIT_BEHAVE_FUEL_MODELS', payload)
+  },
   updateRangeInput: ({ commit }, payload) => {
     console.log('store range input', payload)
     commit('UPDATE_RANGE_INPUT', payload)
@@ -137,36 +147,50 @@ export const actions = {
 }
 
 export const getters = {
+
   defaultDagConfig: (state) => {
     return state.defaultDagConfig
   },
+
   fuelModels: (state) => {
     return state.fuelModels
+  },
+
+  fuelModelsBehave: (state) => {
+    return state.fuelModelsBehave
   },
   siteInputs: (state) => {
     return state.siteInputs
   },
+
   canopyInputs: (state) => {
     return state.canopyInputs
   },
+
   fuelDomain: (state) => {
     return state.fuelDomain
   },
+
   outputNodes: (state) => {
     return state.outputNodes
   },
+
   results: (state) => {
     return state.results
   },
+
   rangeInput: (state) => {
     return state.rangeInput
   },
+
   rangeOutput: (state) => {
     return state.rangeOutput
   },
+
   selectedFuels: (state) => {
     return state.selectedFuels
   },
+
   selectedOutputs: (state) => {
     return state.selectedOutputs
   }

@@ -2,6 +2,7 @@
   <div>
     <client-only>
       <highchart
+        v-if="series"
         :options="chartOptions"
         :update="watchers"
       />
@@ -34,6 +35,7 @@ export default {
 
   computed: {
     chartOptions () {
+      console.log('line', this.series)
       return {
         chart: {
           type: 'line',

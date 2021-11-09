@@ -8,7 +8,7 @@
           role="button"
           aria-controls="contentIdForA11y3"
         >
-          <figure class="image is-64x64">
+          <figure class="image is-48x48">
             <img :src="require(`~/assets/images/${getThumbnail}`)" alt="Placeholder image">
           </figure>
           <p class="card-header-title is-size-6">

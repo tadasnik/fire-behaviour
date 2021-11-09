@@ -1,68 +1,72 @@
 <template>
   <div>
-    <b-tabs position="is-centered">
-      <b-tab-item label="Model" icon="mdi mdi-cog">
-        <section class="section">
-          <div class="tile is-ancestor">
-            <div class="tile is-parent">
-              <div class="tile is-child box">
-                <h4 class="title is-4">
-                  Fuel models
-                </h4>
+    <section class="section">
+      <div class="tile is-ancestor">
+        <div class="tile is-parent">
+          <div class="tile is-child box">
+            <h4 class="title is-4">
+              Fuel models
+            </h4>
 
-                <div class="columns is-mobile is-multiline is-centered">
-                  <fuel-tile
-                    v-for="(fuel, index) in selectedFuels"
-                    :key="fuel + index"
-                    :fuel-model-code="fuel"
-                    :node-props="nodeProps.fuelNodeProps"
-                    @change="fuelModelRun(fuel)"
-                  />
-                </div>
-              </div>
+            <div class="columns is-mobile is-multiline is-centered">
+              <fuel-tile
+                v-for="(fuel, index) in selectedFuels"
+                :key="fuel + index"
+                :fuel-model-code="fuel"
+                :node-props="nodeProps.fuelNodeProps"
+                @change="fuelModelRun(fuel)"
+              />
             </div>
           </div>
-          <div class="tile is-ancestor">
-            <div class="tile is-5 is-parent">
-              <div class="tile is-child box">
-                <model-inputs
-                  key="uidinputs"
-                  :selected-inputs="selectedInputs"
-                  :node-props="nodeProps.inputNodes"
-                  @change="runModels()"
-                />
-              </div>
-            </div>
-            <div class="tile is-parent">
-              <div class="tile is-child box">
-                <sensitivity
-                  @change="runOutputs()"
-                />
-              </div>
-            </div>
+        </div>
+      </div>
+      <div class="tile is-ancestor">
+        <div class="tile is-5 is-parent is-vertical">
+          <div class="tile is-child box">
+            <fuel-card
+              v-for="(fuel, index) in selectedFuels"
+              :key="fuel + index"
+              :fuel-model-code="fuel"
+              :node-props="nodeProps.fuelNodeProps"
+              @change="fuelModelRun(fuel)"
+            />
           </div>
-        </section>
-      </b-tab-item>
-      <b-tab-item label="Table View" icon="mdi mdi-table">
-        <table-b :data="getFuels" :node-props="nodeProps" />
-      </b-tab-item>
-    </b-tabs>
+
+          <div class="tile is-child box">
+            <model-inputs
+              key="uidinputs"
+              :selected-inputs="selectedInputs"
+              :node-props="nodeProps.inputNodes"
+              @change="runModels()"
+            />
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child box">
+            <sensitivity
+              @change="runOutputs()"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
-import { Sim, StorageNodeMap } from '@cbevins/fire-behavior-simulator'
+import { Sim, StorageNodeMap, FuelCatalog } from '@cbevins/fire-behavior-simulator'
 import { min, max, median, quantile } from 'd3-array'
 import { mapGetters } from 'vuex'
 import { defaultConfig } from '@/assets/defaultConfig.js'
 import { nodeProps } from '@/assets/nodeProps.js'
 import { exFuels } from '@/assets/fuels.js'
+import { fuelScenarios } from '@/assets/scenarios.js'
+import fuelsUK from '@/assets/UKFuels.json'
 import FuelTile from '~/components/FuelTile'
 import ModelInputs from '~/components/ModelInputs'
 
 export default {
   name: 'BehavePlus',
-
   components: {
     FuelTile,
     ModelInputs
@@ -74,6 +78,7 @@ export default {
       dag: {},
       nodeProps: {},
       resultsObj: {},
+      scenarios: {},
       selectedInputs: [],
       selectedCanopyInputs: [],
       behavePropNames: ['fireFlameLength', 'fireSpreadRate'],
@@ -83,7 +88,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      fuelModels: 'selector/fuelModels',
+      fuelModels: 'fuelModelsUK',
       siteInputs: 'selector/siteInputs',
       // canopyInputs: 'selector/canopyInputs',
       outputNodes: 'selector/outputNodes',
@@ -94,7 +99,22 @@ export default {
       selectedFuels: 'selector/selectedFuels'
     }),
 
+    getFuelsScenarios () {
+      // to call the table component:
+      // <table-b :data="getFuels" :node-props="nodeProps" />
+      const resArray = []
+      this.selectedFuels.forEach((fuel) => {
+        const fuelModel = this.fuelModels[fuel]
+        Object.keys(this.scenarios).forEach((keys) => {
+        })
+        resArray.push(fuelModel)
+      })
+      return resArray
+    },
+
     getFuels () {
+      // to call the table component:
+      // <table-b :data="getFuels" :node-props="nodeProps" />
       const resArray = []
       this.selectedFuels.forEach((fuel) => {
         const fuelModel = this.fuelModels[fuel]
@@ -160,22 +180,27 @@ export default {
 
   created () {
     this.nodeProps = nodeProps
-    // this.fuelCatalog = FuelCatalog
+    this.scenarios = fuelScenarios
+    this.fuelCatalog = FuelCatalog
     this.$store.dispatch('selector/initOutputNodes', this.nodeProps.outputNodes)
     this.$store.dispatch('selector/initSiteInputs', this.nodeProps.inputNodes)
+    console.log('created', this.siteInputs)
     // this.$store.dispatch('selector/initCanopyInputs', this.nodeProps.canopyNodes)
     this.sim = new Sim()
     // this.crown = CrownFire
     this.dag = this.sim.createDag('basicUsage')
     this.dag.configure(this.defaultDagConfig)
     this.setNodeUnits(this.nodeProps)
-    this.prepareFuels()
-    // this.$store.dispatch('selector/initFuelModels', exFuels)
+    // this.prepareFuels()
+    // this.$store.dispatch('selectorinitFuelModels')
+    // this.prepareBehaveFuels()
+    this.$store.dispatch('selector/initFuelModels', fuelsUK)
     this.$store.dispatch('selector/initConfig')
     this.resultsObj = new StorageNodeMap(this.dag)
     this.dag.setStorageClass(this.resultsObj)
     this.updateDagSelected()
     this.updateRequiredSiteInputs()
+    // this.runModels()
     // this.updateRequiredCanopyInputs()
   },
 
@@ -217,6 +242,29 @@ export default {
         }
       }
       return [{ data: res }]
+    },
+
+    runModelScenarios (fuel) {
+      const prop = 'value'
+      this.setFuelInputs(fuel)
+      Object.keys(this.scenarios).forEach((key) => {
+        const scenario = this.scenarios[key]
+        Object.keys(scenario).forEach((scen) => {
+          this.$store.dispatch('selector/updateSiteInputProp', { scen, prop, scenario })
+        })
+        this.setInputs(this.siteInputs)
+        this.dag.run()
+        this.selectedOutputs.forEach((item) => {
+          const geneLabel = this.outputNodes[item].geneLabel
+          const node = this.dag.get(geneLabel)
+          const res = this.resultsObj.get(geneLabel)
+          const dispRes = []
+          res.forEach((item) => {
+            dispRes.push(node._variant.displayValue(item))
+          })
+          this.$store.dispatch('selector/updateResults', { output: item, fuel, payload: dispRes.map(Number) })
+        })
+      })
     },
 
     runModel (fuel) {
@@ -290,6 +338,27 @@ export default {
           node._variant.setDisplayDecimals(item.decimals)
         })
       })
+    },
+
+    prepareBehaveFuels () {
+      const Ms = FuelCatalog.models().filter(item => item.domain === 'behave')
+      const tempFuels = { ...Ms }
+      // exFuels.forEach((item) => {
+      Object.keys(Ms).forEach((key) => {
+        Object.values(this.nodeProps.fuelNodeProps).forEach((fuelProp) => {
+          const node = this.dag.get(fuelProp.geneLabel)
+          const val = node._variant.displayValue(Ms[key][fuelProp.catalogParam])
+          tempFuels[key][fuelProp.catalogParam] = parseFloat(val)
+        })
+      })
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(tempFuels))
+      const downloadAnchorNode = document.createElement('a')
+      downloadAnchorNode.setAttribute('href', dataStr)
+      downloadAnchorNode.setAttribute('download', 'test.json')
+      document.body.appendChild(downloadAnchorNode) // required for firefox
+      downloadAnchorNode.click()
+      downloadAnchorNode.remove()
+      this.$store.dispatch('selector/initFuelBehaveModels', tempFuels)
     },
 
     prepareFuels () {

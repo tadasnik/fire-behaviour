@@ -149,7 +149,19 @@ export default {
       this.selectedFuels.forEach((fuel) => {
         const inputs = this.siteInputs[this.rangeInput].value
         const outputs = this.results[this.selectedOutputs[0]][fuel]
-        resArray.push({ name: fuel, data: inputs.map((e, i) => { return [e, outputs[i]] }) })
+        if (!Array.isArray(inputs)) {
+          resArray.push({
+            name: fuel,
+            data: [[inputs, outputs[0]]]
+          })
+        } else {
+          resArray.push({
+            name: fuel,
+            data: inputs.map((e, i) => {
+              return [e, outputs[i]]
+            })
+          })
+        }
       })
       return resArray
     },
@@ -182,7 +194,7 @@ export default {
   },
 
   created () {
-    this.setRangeInput(this.rangeInput)
+    // this.setRangeInput(this.rangeInput)
   },
 
   methods: {

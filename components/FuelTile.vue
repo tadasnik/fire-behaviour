@@ -88,7 +88,7 @@ export default {
   computed: {
 
     ...mapGetters({
-      fuelModels: 'selector/fuelModels'
+      fuelModels: 'fuelModelsUK'
     }),
 
     getURL () {
@@ -135,23 +135,6 @@ export default {
 
     getUnits (param) {
       return this.nodeProps[param].units
-    },
-
-    setValue (param, payload) {
-      this.$store.dispatch('selector/updateFuelProp', { fuel: this.fuelModelCode, param, payload })
-      this.$emit('change')
-    },
-
-    triggerArray (param, payload) {
-      if (payload === true) {
-        const orig = this.getValue(param)
-        let val = []
-        val = [orig, orig * 1.1]
-        this.setValue(param, val)
-      } else {
-        const val = [...this.getValue(param)]
-        this.setValue(param, val[0])
-      }
     }
   }
 }
