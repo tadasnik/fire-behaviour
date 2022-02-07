@@ -132,11 +132,13 @@ export default {
   components: {
     VueJsonToCsv
   },
+
   props: {
     data: {
       type: Array,
       required: true
     },
+
     nodeProps: {
       type: Object,
       required: true

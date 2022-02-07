@@ -49,6 +49,7 @@ export default {
   },
 
   props: {
+
     fuelModelCode: {
       type: String,
       required: true
@@ -58,6 +59,7 @@ export default {
       type: Object,
       required: true
     }
+
   },
 
   data () {

@@ -27,13 +27,13 @@
                 maxlength="1000"
               />
             </b-field>
-            <b-field
-              :label="getPropLabel('deadMext')"
-            >
-              <b-numberinput
-                v-model="editedFuel.deadMext"
-              />
-            </b-field>
+            <fuel-field
+              v-for="(prop, index) in fuelNumericProps"
+              :key="index"
+              :label="getPropLabel(prop)"
+              :value="editedFuel[prop]"
+              @updateValue="changeFuelValue(prop, $event)"
+            />
             <b-button
               @click="onSave"
             >
@@ -52,7 +52,11 @@
 </template>
 
 <script>
+import FuelField from '~/components/Admin/FuelField'
 export default {
+  components: {
+    FuelField
+  },
 
   props: {
     fuel: {
@@ -80,7 +84,8 @@ export default {
             content: '',
             previewText: '',
             id: ''
-          }
+          },
+      fuelNumericProps: ['depth', 'deadMext']
     }
   },
 
@@ -90,6 +95,11 @@ export default {
       console.log(prop)
       return this.fuelProps[prop].label + ' (' +
       this.fuelProps[prop].units + ')'
+    },
+
+    changeFuelValue (prop, value) {
+      console.log('updating value', prop, value)
+      this.editedFuel[prop] = value
     },
 
     onSave () {

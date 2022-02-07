@@ -42,7 +42,7 @@ export const exFuels = {
     photo: 'https://drive.google.com/uc?id=11pjhmw4kdvx2m7scm5h2cukfksgazpz5',
     // thumbnail: 'https://drive.google.com/thumbnail?id=1ru8sb0zb2vwpflexd-mxwkkwjkdobkdt'
 
-    description: 'primary carrier of fire in sh6 is woody shrubs and shrub litter. dense, moderatelly tall (0.6m) shrub, no coarse fuels, little or no harbaceous fuel. characteristic species in uk heather',
+    description: 'primary carrier of fire in sh6 is woody shrubs and shrub litter. dense, moderatelly tall (0.6m) shrub, no coarse fuels, little or no harbaceous fuel. Characteristic species in uk heather',
     thumbnail: 'thumbnail_heather_low.jpeg'
   },
   sh4: {
