@@ -2,25 +2,6 @@
   <div>
     <section class="section">
       <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <div class="tile is-child box">
-            <h4 class="title is-4">
-              Fuel models
-            </h4>
-
-            <div class="columns is-mobile is-multiline is-centered">
-              <fuel-tile
-                v-for="(fuel, index) in selectedFuels"
-                :key="fuel + index"
-                :fuel-model-code="fuel"
-                :node-props="nodeProps.fuelNodeProps"
-                @change="fuelModelRun(fuel)"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-ancestor">
         <div class="tile is-5 is-parent is-vertical">
           <div class="tile is-child box">
             <fuel-card
@@ -62,13 +43,11 @@ import { nodeProps } from '@/assets/nodeProps.js'
 import { exFuels } from '@/assets/fuels.js'
 import { fuelScenarios } from '@/assets/scenarios.js'
 import fuelsUK from '@/assets/UKFuels.json'
-import FuelTile from '~/components/FuelTile'
 import ModelInputs from '~/components/ModelInputs'
 
 export default {
   name: 'BehavePlus',
   components: {
-    FuelTile,
     ModelInputs
   },
 
@@ -184,7 +163,6 @@ export default {
     this.fuelCatalog = FuelCatalog
     this.$store.dispatch('selector/initOutputNodes', this.nodeProps.outputNodes)
     this.$store.dispatch('selector/initSiteInputs', this.nodeProps.inputNodes)
-    console.log('created', this.siteInputs)
     // this.$store.dispatch('selector/initCanopyInputs', this.nodeProps.canopyNodes)
     this.sim = new Sim()
     // this.crown = CrownFire

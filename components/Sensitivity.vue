@@ -194,7 +194,7 @@ export default {
   },
 
   created () {
-    // this.setRangeInput(this.rangeInput)
+    this.setRangeInput(this.rangeInput)
   },
 
   methods: {

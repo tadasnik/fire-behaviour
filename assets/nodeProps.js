@@ -397,6 +397,7 @@ export const nodeProps = {
       value: 0.2,
       decimals: 1,
       max: 5,
+      min: 0.01,
       step: 0.1
     },
 
@@ -409,6 +410,7 @@ export const nodeProps = {
       value: 0.2,
       decimals: 0,
       max: 25000000,
+      min: 1000000,
       step: 100000
     },
 
@@ -421,6 +423,7 @@ export const nodeProps = {
       value: 0.2,
       decimals: 0,
       max: 25000000,
+      min: 1000000,
       step: 100000
     },
 
@@ -433,6 +436,7 @@ export const nodeProps = {
       value: 0.2,
       decimals: 2,
       max: 2,
+      min: 0,
       step: 0.1
     },
 
@@ -445,6 +449,7 @@ export const nodeProps = {
       value: 0.2,
       decimals: 2,
       max: 2,
+      min: 0,
       step: 0.1
     },
 
@@ -457,6 +462,7 @@ export const nodeProps = {
       value: 0.2,
       decimals: 2,
       max: 2,
+      min: 0,
       step: 0.1
     },
 
@@ -469,6 +475,7 @@ export const nodeProps = {
       value: 0.2,
       decimals: 2,
       max: 200,
+      min: 1,
       step: 1
     },
 
@@ -481,6 +488,7 @@ export const nodeProps = {
       value: 15,
       decimals: 0,
       max: 60,
+      min: 1,
       step: 1
     },
 
@@ -493,6 +501,7 @@ export const nodeProps = {
       value: 15,
       decimals: 2,
       max: 200,
+      min: 1,
       step: 1
     },
 
@@ -505,6 +514,7 @@ export const nodeProps = {
       value: 15,
       decimals: 2,
       max: 200,
+      min: 1,
       step: 1
     },
 
@@ -517,6 +527,7 @@ export const nodeProps = {
       value: 15,
       decimals: 2,
       max: 2,
+      min: 0,
       step: 0.01
     },
 
@@ -529,6 +540,7 @@ export const nodeProps = {
       value: 15,
       decimals: 2,
       max: 2,
+      min: 0,
       step: 0.01
     },
 
@@ -541,6 +553,7 @@ export const nodeProps = {
       value: 15,
       decimals: 0,
       max: 100,
+      min: 0,
       step: 1
     }
   }

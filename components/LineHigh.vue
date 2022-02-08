@@ -35,7 +35,6 @@ export default {
 
   computed: {
     chartOptions () {
-      console.log('line', this.series)
       return {
         chart: {
           type: 'line',

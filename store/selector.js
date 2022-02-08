@@ -11,7 +11,7 @@ export const state = () => ({
   token: null,
   rangeInput: 'dead1hFuelMoisture',
   rangeOutput: 'fireFlameLength',
-  selectedFuels: ['sh8', 'gr6'],
+  selectedFuels: ['sh6', 'gs3', 'gr3', 'gr6'],
   // selectedFuels: ['sh1', 'sh4', 'sh6', 'sh8', 'gr2', 'gr3', 'gr6', 'gr8', 'gs3'],
   selectedOutputs: ['fireFlameLength', 'fireSpreadRate'],
   defaultDagConfig: defaultConfig.defaultDagConfig

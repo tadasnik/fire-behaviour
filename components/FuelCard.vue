@@ -27,11 +27,12 @@
         </div>
         <div class="block">
           <fuel-control
-            v-for="{ label, catalogParam, max, step } in getFuelNodes"
+            v-for="{ label, catalogParam, max, min, step } in getFuelNodes"
             :key="label+fuelModelCode"
             :title="label"
             :value="getValue(catalogParam)"
             :max="max"
+            :min="min"
             :step="step"
             indicator
             lazy
@@ -88,7 +89,8 @@ export default {
     },
 
     getFuelModelDisplayLabel () {
-      return this.fuelModels[this.fuelModelCode].displayLabel
+      return this.fuelModels[this.fuelModelCode].displayLabel +
+        ' (' + this.fuelModelCode + ')'
     },
 
     getFuelNodes () {
@@ -98,6 +100,7 @@ export default {
           fuelNodes.push(item)
         }
       })
+      console.log(fuelNodes)
       return fuelNodes
       // return this.nodeProps.filter(item => item.selected === true)
     }
