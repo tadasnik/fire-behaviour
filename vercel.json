@@ -5,8 +5,22 @@
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
       "config": {
-         "serverFiles": ["/assets/UKFuels.json"]
-        }
+        "serverFiles": [
+            "middleware/**",
+            "/assets/UKFuels.json",
+            "package.json"
+        ]
+      }
+    }
+  ],
+"routes": [
+    {
+      "src": "/sw.js",
+      "continue": true,
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "Service-Worker-Allowed": "/"
+      }
     }
   ]
 }
