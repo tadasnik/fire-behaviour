@@ -31,15 +31,12 @@ export const mutations = {
 export const actions = {
 
   async nuxtServerInit (vuexContext, context) {
-    return await context.app.$http.$get('/fuelsUK.json')
-      .then((res) => {
-        const fuelsObject = {}
-        for (const key in res) {
-          fuelsObject[res[key].code] = { ...res[key], id: key }
-        }
-        vuexContext.commit('INIT_FUELS_UK', fuelsObject)
-      })
-      .catch(e => context.error(e))
+    const data = await context.$axios.$get('https://vuebehaveplus-default-rtdb.europe-west1.firebasedatabase.app/fuelsUK.json')
+    const fuelsObject = {}
+    for (const key in data) {
+      fuelsObject[data[key].code] = { ...data[key], id: key }
+    }
+    vuexContext.commit('INIT_FUELS_UK', fuelsObject)
   },
 
   async authenticateUser ({ commit }, authData) {

@@ -13,6 +13,7 @@
   "dependencies": {
     "@cbevins/fire-behavior-simulator": "^0.7.4",
     "@nuxt/http": "^0.6.4",
+    "@nuxtjs/axios": "^5.13.6",
     "cookie-universal-nuxt": "^2.1.5",
     "firebase": "^9.1.3"
   },

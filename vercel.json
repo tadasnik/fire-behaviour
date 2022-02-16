@@ -6,14 +6,13 @@
       "use": "@nuxtjs/vercel-builder",
       "config": {
         "serverFiles": [
-            "middleware/**",
-            "/assets/UKFuels.json",
+            "middleware/*",
             "package.json"
         ]
       }
     }
   ],
-"routes": [
+  "routes": [
     {
       "src": "/sw.js",
       "continue": true,

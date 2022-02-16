@@ -49,19 +49,27 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/buefy
-    '@nuxt/http',
+    '@nuxtjs/axios',
     'nuxt-material-design-icons',
     'nuxt-highcharts',
     'cookie-universal-nuxt',
     ['nuxt-buefy', { css: false, materialDesignIcons: true }]
   ],
-
-  http: {
-    baseURL: process.env.baseUrl || 'https://vuebehaveplus-default-rtdb.europe-west1.firebasedatabase.app'
+  axios: {
+    baseURL: 'https://vuebehaveplus-default-rtdb.europe-west1.firebasedatabase.app'
   },
 
-  env: {
-    firebaseKey: 'AIzaSyBqkp4yQ8HQrWuCHjFfijtZdC3QuZkUNQo'
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.baseUrl || 'https://vuebehaveplus-default-rtdb.europe-west1.firebasedatabase.app'
+    }
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+      firebaseKey: process.env.FIREBASE_KEY
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
