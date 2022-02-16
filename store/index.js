@@ -32,7 +32,7 @@ export const actions = {
 
   async nuxtServerInit (vuexContext, context) {
     console.log('store server init')
-    return await context.app.$http.$get('/fuelsUK.json')
+    return context.app.$http.$get('/fuelsUK.json')
       .then((res) => {
         console.log(res)
         const fuelsObject = {}
