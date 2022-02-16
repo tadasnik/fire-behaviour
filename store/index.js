@@ -32,12 +32,16 @@ export const actions = {
 
   async nuxtServerInit (vuexContext, context) {
     console.log('store server init')
-    const data = await context.app.$http.$get('/fuelsUK.json')
-    const fuelsObject = {}
-    for (const key in data) {
-      fuelsObject[data[key].code] = { ...data[key], id: key }
-    }
-    vuexContext.commit('INIT_FUELS_UK', fuelsObject)
+    return await context.app.$http.$get('/fuelsUK.json')
+      .then((res) => {
+        console.log(res)
+        const fuelsObject = {}
+        for (const key in res) {
+          fuelsObject[res[key].code] = { ...res[key], id: key }
+        }
+        vuexContext.commit('INIT_FUELS_UK', fuelsObject)
+      })
+      .catch(e => context.error(e))
   },
 
   async authenticateUser ({ commit }, authData) {
